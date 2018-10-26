@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link login.OnFragmentInteractionListener} interface
+ * {@link logout.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link login#newInstance} factory method to
+ * Use the {@link logout#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class login extends Fragment {
+public class logout extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,7 +29,7 @@ public class login extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public login() {
+    public logout() {
         // Required empty public constructor
     }
 
@@ -39,11 +39,11 @@ public class login extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment login.
+     * @return A new instance of fragment logout.
      */
     // TODO: Rename and change types and number of parameters
-    public static login newInstance(String param1, String param2) {
-        login fragment = new login();
+    public static logout newInstance(String param1, String param2) {
+        logout fragment = new logout();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,7 +64,7 @@ public class login extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        return inflater.inflate(R.layout.fragment_logout, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

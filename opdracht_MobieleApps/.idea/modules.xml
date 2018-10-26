@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/slidingNavigationMenu  (experimenteren versie2 werkend door copy in elke class).iml" filepath="$PROJECT_DIR$/slidingNavigationMenu  (experimenteren versie2 werkend door copy in elke class).iml" />
+      <module fileurl="file://$PROJECT_DIR$/slidingNavigationMenu (versie3 fragments).iml" filepath="$PROJECT_DIR$/slidingNavigationMenu (versie3 fragments).iml" />
     </modules>
   </component>
 </project>
