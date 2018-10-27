@@ -1,6 +1,7 @@
 package com.example.thomas.slidingnavigationmenu;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 
 /**
@@ -69,7 +71,36 @@ public class login extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        final View view=inflater.inflate(R.layout.fragment_login, container, false);
+
+        Button button=(Button) view.findViewById(R.id.uiLoginButton);
+        button.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                EditText etGebruikersNaam=(EditText)view.findViewById(R.id.uiGebruikersnaam);
+                String gebruikersNaam=etGebruikersNaam.getText().toString();
+                System.out.println(gebruikersNaam);
+                EditText etWachtwoord=(EditText)view.findViewById(R.id.uiWachtwoord);
+                String wachtwoord=etWachtwoord.getText().toString();
+                System.out.println(wachtwoord);
+            }
+        });
+
+        TextView textView=(TextView) view.findViewById(R.id.uiRegistratieLink);
+        textView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent=new Intent(getActivity(),registratie.class);
+                startActivity(intent);
+
+            }
+        });
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

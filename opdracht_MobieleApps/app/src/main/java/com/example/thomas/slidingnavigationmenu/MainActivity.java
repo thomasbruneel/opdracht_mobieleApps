@@ -102,22 +102,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    //fragmentlogin
-
-    public void inloggen(View view){
-        EditText etGebruikersNaam=(EditText)findViewById(R.id.uiGebruikersnaam);
-        String gebruikersNaam=etGebruikersNaam.getText().toString();
-        System.out.println(gebruikersNaam);
-        EditText etWachtwoord=(EditText)findViewById(R.id.uiWachtwoord);
-        String wachtwoord=etWachtwoord.getText().toString();
-        System.out.println(wachtwoord);
-
-    }
-    public void naarRegistratie(View view){
-        Intent intent=new Intent(this,registratie.class);
-        startActivity(intent);
-
-    }
 
 
 
