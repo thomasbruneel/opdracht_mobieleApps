@@ -1,6 +1,7 @@
 package com.example.thomas.slidingnavigationmenu;
 
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mijnDrawer;
@@ -29,9 +32,11 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationView nv=(NavigationView) findViewById(R.id.nv1);
         setupDrawerContent(nv);
+
+
         //testen
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Class fragmentClass=Welcome.class;
+        Class fragmentClass=home.class;
         Fragment myFragment=null;
         try{
             myFragment=(Fragment)fragmentClass.newInstance();
@@ -56,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
         Fragment myFragment=null;
         Class fragmentClass = null;
         switch(menuitem.getItemId()){
+            case R.id.home:
+                fragmentClass=home.class;
+                break;
 
             case R.id.login:
                 fragmentClass=login.class;
@@ -92,6 +100,22 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+    }
+    //fragmentlogin
+
+    public void inloggen(View view){
+        EditText etGebruikersNaam=(EditText)findViewById(R.id.uiGebruikersnaam);
+        String gebruikersNaam=etGebruikersNaam.getText().toString();
+        System.out.println(gebruikersNaam);
+        EditText etWachtwoord=(EditText)findViewById(R.id.uiWachtwoord);
+        String wachtwoord=etWachtwoord.getText().toString();
+        System.out.println(wachtwoord);
+
+    }
+    public void naarRegistratie(View view){
+        Intent intent=new Intent(this,registratie.class);
+        startActivity(intent);
 
     }
 

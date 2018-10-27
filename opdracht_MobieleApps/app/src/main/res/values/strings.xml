@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">mijn app</string>
+    <string name="app_name">Second Chance</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nogGeenAccount"><u>Nog geen account? klik hier"</u></string>
+    <string name="terugNaarLogin"><u>Terug naar loginpagina"</u></string>
 
 </resources>
