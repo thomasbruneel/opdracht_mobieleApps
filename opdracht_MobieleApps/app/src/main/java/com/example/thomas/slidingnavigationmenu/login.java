@@ -16,12 +16,12 @@ import android.widget.TextView;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link login.OnFragmentInteractionListener} interface
+ * {@link Login.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link login#newInstance} factory method to
+ * Use the {@link Login#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class login extends Fragment {
+public class Login extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -33,7 +33,7 @@ public class login extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public login() {
+    public Login() {
         // Required empty public constructor
     }
 
@@ -46,8 +46,8 @@ public class login extends Fragment {
      * @return A new instance of fragment login.
      */
     // TODO: Rename and change types and number of parameters
-    public static login newInstance(String param1, String param2) {
-        login fragment = new login();
+    public static Login newInstance(String param1, String param2) {
+        Login fragment = new Login();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -94,7 +94,7 @@ public class login extends Fragment {
             @Override
             public void onClick(View v)
             {
-                Intent intent=new Intent(getActivity(),registratie.class);
+                Intent intent=new Intent(getActivity(),Registratie.class);
                 startActivity(intent);
 
             }

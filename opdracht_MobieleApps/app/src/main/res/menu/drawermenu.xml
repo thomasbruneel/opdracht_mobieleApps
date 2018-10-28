@@ -2,7 +2,17 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/home" android:title="Home" android:icon="@drawable/ic_icon_home"/>
+
     <item android:id="@+id/login" android:title="Login" android:icon="@drawable/ic_icon_signin"/>
+
+    <item android:id="@+id/mijnZoekertjes" android:title="mijn zoekertjes" android:icon="@drawable/ic_icon_mijnzoekertjes"/>
+
     <item android:id="@+id/settings" android:title="Settings" android:icon="@drawable/ic_icon_settings"/>
+
+    <item android:id="@+id/about" android:title="About us" android:icon="@drawable/ic_icon_about"/>
+
+
     <item android:id="@+id/logout" android:title="Logout" android:icon="@drawable/ic_icon_signout"/>
+
+
 </menu>

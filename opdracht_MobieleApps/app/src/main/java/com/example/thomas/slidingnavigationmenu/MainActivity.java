@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         //testen
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Class fragmentClass=home.class;
+        Class fragmentClass=Home.class;
         Fragment myFragment=null;
         try{
             myFragment=(Fragment)fragmentClass.newInstance();
@@ -62,20 +62,30 @@ public class MainActivity extends AppCompatActivity {
         Class fragmentClass = null;
         switch(menuitem.getItemId()){
             case R.id.home:
-                fragmentClass=home.class;
+                fragmentClass=Home.class;
                 break;
 
             case R.id.login:
-                fragmentClass=login.class;
+                fragmentClass=Login.class;
+                break;
+
+            case R.id.mijnZoekertjes:
+                fragmentClass=MijnZoekertjes.class;
+                break;
+
+            case R.id.about:
+                fragmentClass=About.class;
                 break;
 
             case R.id.settings:
-                fragmentClass=settings.class;
+                fragmentClass=Settings.class;
                 break;
 
             case R.id.logout:
-                fragmentClass=logout.class;
+                fragmentClass=Logout.class;
                 break;
+
+
         }
         try{
             myFragment=(Fragment)fragmentClass.newInstance();

@@ -16,8 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".registratie"></activity>
+        <activity android:name=".Registratie" />
+        <activity android:name=".ZoekertjeView"></activity>
     </application>
 
 </manifest>
