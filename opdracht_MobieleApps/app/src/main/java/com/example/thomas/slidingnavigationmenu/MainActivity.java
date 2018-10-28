@@ -14,27 +14,42 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mijnDrawer;
     private ActionBarDrawerToggle mijnToggle;
     NavigationView nv;
+    View headerView;
+
+    private FirebaseAuth fbauht;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        fbauht=FirebaseAuth.getInstance();
+
         mijnDrawer=(DrawerLayout) findViewById(R.id.drawer);
         mijnToggle=new ActionBarDrawerToggle(this,mijnDrawer,R.string.open,R.string.close);
         mijnDrawer.addDrawerListener(mijnToggle);
         mijnToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        NavigationView nv=(NavigationView) findViewById(R.id.nv1);
+        nv=(NavigationView) findViewById(R.id.nv1);
         setupDrawerContent(nv);
+        headerView=nv.getHeaderView(0);
+        TextView tv=(TextView) headerView.findViewById(R.id.uiCurrentUser);
+        if(fbauht.getCurrentUser()!=null){
+            tv.setText(" email: "+fbauht.getCurrentUser().getEmail());
+        }
 
 
-        //testen
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         Class fragmentClass=Home.class;
         Fragment myFragment=null;
@@ -82,7 +97,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.logout:
-                fragmentClass=Logout.class;
+                fbauht.signOut();
+                TextView tv=(TextView) headerView.findViewById(R.id.uiCurrentUser);
+                if(fbauht.getCurrentUser()==null){
+                    tv.setText("");
+                }
+                fragmentClass=Home.class;
                 break;
 
 

@@ -5,5 +5,14 @@
     android:layout_height="160dp"
     android:background="@drawable/blueheader">
 
+    <TextView
+        android:id="@+id/uiCurrentUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+
+        />
 
 </LinearLayout>
