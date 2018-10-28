@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "832310748211",
+    "firebase_url": "https://secondchance-85e74.firebaseio.com",
+    "project_id": "secondchance-85e74",
+    "storage_bucket": "secondchance-85e74.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832310748211:android:30b6820f161814c2",
+        "android_client_info": {
+          "package_name": "com.secondChance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "832310748211-lcjltjcvken8eh2d1lsnjnjn1qkv5b0h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1eXFlg34gqHMoBqBQFFhqzzw1ktFUUMA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
