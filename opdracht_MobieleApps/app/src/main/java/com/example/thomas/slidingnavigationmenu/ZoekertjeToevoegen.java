@@ -16,11 +16,16 @@ import android.widget.Toast;
 
 import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 /**
@@ -43,7 +48,7 @@ public class ZoekertjeToevoegen extends Fragment {
 
     private FirebaseAuth fbauth;
 
-    private DatabaseReference databaseZoekertje;
+    private FirebaseFirestore db;
 
 
     private OnFragmentInteractionListener mListener;
@@ -83,7 +88,8 @@ public class ZoekertjeToevoegen extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         final View view=inflater.inflate(R.layout.fragment_zoekertje_toevoegen, container, false);
         fbauth= FirebaseAuth.getInstance();
-        databaseZoekertje=FirebaseDatabase.getInstance().getReference("Zoekertje");
+        db=FirebaseFirestore.getInstance();
+
         Button button=(Button) view.findViewById(R.id.uiToevoegButton);
         button.setOnClickListener(new View.OnClickListener()
         {
@@ -98,9 +104,20 @@ public class ZoekertjeToevoegen extends Fragment {
                 String userID=fbauth.getCurrentUser().getUid();
 
                 Zoekertje zoekertje=new Zoekertje(userID,titel,prijs);
-                String id=databaseZoekertje.push().getKey();
-                Toast.makeText(getActivity(),"titel: "+titel,Toast.LENGTH_SHORT).show();
-                databaseZoekertje.child(id).setValue(zoekertje);
+                CollectionReference dbZoekertjes=db.collection("zoekertjes");
+                dbZoekertjes.add(zoekertje).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(getActivity(),"zoekertje succesvol toegevoegd",Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getActivity(),e.getMessage(),Toast.LENGTH_SHORT).show();
+
+
+                    }
+                });
 
 
             }
