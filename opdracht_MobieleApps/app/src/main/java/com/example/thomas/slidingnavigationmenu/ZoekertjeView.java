@@ -15,7 +15,7 @@ public class ZoekertjeView extends AppCompatActivity {
         setContentView(R.layout.activity_zoekertje_view);
 
         Intent i = getIntent();
-        Zoekertje p = (Zoekertje) i.getSerializableExtra("mijnProduct");
+        Zoekertje p = (Zoekertje) i.getSerializableExtra("mijnZoekertje");
 
         TextView id=(TextView) findViewById(R.id.uiId);
         TextView naam=(TextView) findViewById(R.id.uiNaam);
