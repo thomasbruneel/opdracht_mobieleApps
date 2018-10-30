@@ -4,28 +4,34 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
-
-import java.util.ArrayList;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MijnZoekertjes.OnFragmentInteractionListener} interface
+ * {@link ZoekertjeToevoegen.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MijnZoekertjes#newInstance} factory method to
+ * Use the {@link ZoekertjeToevoegen#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MijnZoekertjes extends Fragment {
+public class ZoekertjeToevoegen extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -35,9 +41,14 @@ public class MijnZoekertjes extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private FirebaseAuth fbauth;
+
+    private DatabaseReference databaseZoekertje;
+
+
     private OnFragmentInteractionListener mListener;
 
-    public MijnZoekertjes() {
+    public ZoekertjeToevoegen() {
         // Required empty public constructor
     }
 
@@ -47,11 +58,11 @@ public class MijnZoekertjes extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment mijZoekertjes.
+     * @return A new instance of fragment ZoekertjeToevoegen.
      */
     // TODO: Rename and change types and number of parameters
-    public static MijnZoekertjes newInstance(String param1, String param2) {
-        MijnZoekertjes fragment = new MijnZoekertjes();
+    public static ZoekertjeToevoegen newInstance(String param1, String param2) {
+        ZoekertjeToevoegen fragment = new ZoekertjeToevoegen();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -70,29 +81,30 @@ public class MijnZoekertjes extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        final View view=inflater.inflate(R.layout.fragment_mijn_zoekertjes, container, false);
-        // code hieronder is tijdelijk gewoon uittesten van listview
-        ArrayList<Zoekertje>producten=new ArrayList<>();
-        /*
-        producten.add(new Zoekertje(1,"fiets",14.5));
-        producten.add(new Zoekertje(2,"stoel",12));
-        producten.add(new Zoekertje(3,"tafel",9));
-        */
-
-
-     ListView lv=(ListView)view.findViewById(R.id.mijnListView);
-     ArrayAdapter<Zoekertje> adapter=new ArrayAdapter<Zoekertje>(getActivity(),android.R.layout.simple_list_item_1,producten);
-     lv.setAdapter(adapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        final View view=inflater.inflate(R.layout.fragment_zoekertje_toevoegen, container, false);
+        fbauth= FirebaseAuth.getInstance();
+        databaseZoekertje=FirebaseDatabase.getInstance().getReference("Zoekertje");
+        Button button=(Button) view.findViewById(R.id.uiToevoegButton);
+        button.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Zoekertje p = (Zoekertje) (parent.getItemAtPosition(position));
-                Intent intent = new Intent(view.getContext(),ZoekertjeView.class);
-                intent.putExtra("mijnProduct",p);
-                startActivity(intent);
+            public void onClick(View v)
+            {
+                EditText etTitel=(EditText)view.findViewById(R.id.uiTitel);
+                String titel=etTitel.getText().toString();
+                EditText etPrijs=(EditText)view.findViewById(R.id.uiPrijs);
+                //eventuele errors
+                double prijs=Double.parseDouble(etPrijs.getText().toString());
+                String userID=fbauth.getCurrentUser().getUid();
+
+                Zoekertje zoekertje=new Zoekertje(userID,titel,prijs);
+                String id=databaseZoekertje.push().getKey();
+                Toast.makeText(getActivity(),"titel: "+titel,Toast.LENGTH_SHORT).show();
+                databaseZoekertje.child(id).setValue(zoekertje);
+
+
             }
         });
-
 
 
         return view;
@@ -108,6 +120,7 @@ public class MijnZoekertjes extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
     }
 
     @Override

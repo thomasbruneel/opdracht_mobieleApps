@@ -7,27 +7,26 @@ import java.io.Serializable;
  */
 @SuppressWarnings("serial")
 public class Zoekertje implements Serializable {
-    private int id;
+
+    private String userId;
     private String name;
     private double price;
 
     public Zoekertje(){
     }
 
-    public Zoekertje(int id, String name, double price) {
-        this.id = id;
+    public Zoekertje(String userId,String name, double price) {
+
+        this.userId=userId;
         this.name = name;
         this.price = price;
     }
 
     @Override
     public String toString() {
-        return "ID: "+id+" ; naam: "+name+" ; price : "+price;
+        return " naam: "+name+" ; price : "+price;
     }
 
-    public int getId() {
-        return id;
-    }
 
     public String getName() {
         return name;
@@ -37,9 +36,6 @@ public class Zoekertje implements Serializable {
         return price;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public void setName(String name) {
         this.name = name;
@@ -47,5 +43,14 @@ public class Zoekertje implements Serializable {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+
+    public String getUserID() {
+        return userId;
+    }
+
+    public void setUserID(String userID) {
+        this.userId = userID;
     }
 }

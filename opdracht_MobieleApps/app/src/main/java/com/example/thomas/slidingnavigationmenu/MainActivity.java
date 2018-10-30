@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         TextView tv=(TextView) headerView.findViewById(R.id.uiCurrentUser);
         if(fbauht.getCurrentUser()!=null){
             tv.setText(" email: "+fbauht.getCurrentUser().getEmail());
+            System.out.println("user is online");
+            System.out.println("kip "+fbauht.getCurrentUser().getUid());
         }
 
 
@@ -94,6 +96,10 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.settings:
                 fragmentClass=Settings.class;
+                break;
+
+            case R.id.zoekertjeToevoegen:
+                fragmentClass=ZoekertjeToevoegen.class;
                 break;
 
             case R.id.logout:

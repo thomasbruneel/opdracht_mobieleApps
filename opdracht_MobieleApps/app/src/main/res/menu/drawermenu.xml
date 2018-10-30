@@ -11,6 +11,8 @@
 
     <item android:id="@+id/about" android:title="About us" android:icon="@drawable/ic_icon_about"/>
 
+    <item android:id="@+id/zoekertjeToevoegen" android:title="zokertje toevoegen" android:icon="@drawable/ic_icon_about"/>
+
 
     <item android:id="@+id/logout" android:title="Logout" android:icon="@drawable/ic_icon_signout"/>
 

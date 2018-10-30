@@ -20,7 +20,7 @@ public class ZoekertjeView extends AppCompatActivity {
         TextView id=(TextView) findViewById(R.id.uiId);
         TextView naam=(TextView) findViewById(R.id.uiNaam);
         TextView prijs=(TextView) findViewById(R.id.uiPrijs);
-        id.setText(String.valueOf(p.getId()));
+        //id.setText(String.valueOf(p.getId()));
         naam.setText(p.getName());
         prijs.setText(String.valueOf(p.getPrice()));
 
