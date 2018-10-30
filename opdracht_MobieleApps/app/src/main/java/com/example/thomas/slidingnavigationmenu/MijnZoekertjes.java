@@ -13,8 +13,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -34,6 +39,9 @@ public class MijnZoekertjes extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private FirebaseFirestore db;
+    private ArrayList<Zoekertje>producten;
 
     private OnFragmentInteractionListener mListener;
 
@@ -72,30 +80,58 @@ public class MijnZoekertjes extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         final View view=inflater.inflate(R.layout.fragment_mijn_zoekertjes, container, false);
         // code hieronder is tijdelijk gewoon uittesten van listview
-        ArrayList<Zoekertje>producten=new ArrayList<>();
+
         /*
         producten.add(new Zoekertje(1,"fiets",14.5));
         producten.add(new Zoekertje(2,"stoel",12));
         producten.add(new Zoekertje(3,"tafel",9));
         */
+        producten=new ArrayList<Zoekertje>();
+        db=FirebaseFirestore.getInstance();
+        db.collection("zoekertjes").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if(!queryDocumentSnapshots.isEmpty()){
+                            List<DocumentSnapshot> list=queryDocumentSnapshots.getDocuments();
+                            //ArrayList<Zoekertje>producten2=new ArrayList<Zoekertje>();
+                            for(DocumentSnapshot d:list){
+                                Zoekertje z=d.toObject(Zoekertje.class);
+                                System.out.println("kip: "+z.toString());
+                                producten.add(z);
 
+                            }
+                            System.out.println(producten.get(0).toString());
 
-     ListView lv=(ListView)view.findViewById(R.id.mijnListView);
-     ArrayAdapter<Zoekertje> adapter=new ArrayAdapter<Zoekertje>(getActivity(),android.R.layout.simple_list_item_1,producten);
-     lv.setAdapter(adapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Zoekertje p = (Zoekertje) (parent.getItemAtPosition(position));
-                Intent intent = new Intent(view.getContext(),ZoekertjeView.class);
-                intent.putExtra("mijnProduct",p);
-                startActivity(intent);
-            }
-        });
+                        }
+                    }
+                    refreshView(producten);
+                });
+        //System.out.println("aap "+producten.get(0).toString());
+        //System.out.println(" la");
+        //System.out.println("bla2");
+        //System.out.println("lengte: " + producten.size());
+        ListView lv=(ListView)view.findViewById(R.id.mijnListView);
+
+        ArrayAdapter<Zoekertje> adapter=new ArrayAdapter<Zoekertje>(getActivity(),android.R.layout.simple_list_item_1,producten);
+        lv.setAdapter(adapter);
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Zoekertje p = (Zoekertje) (parent.getItemAtPosition(position));
+                    Intent intent = new Intent(view.getContext(),ZoekertjeView.class);
+                    intent.putExtra("mijnProduct",p);
+                    startActivity(intent);
+                }
+            });
 
 
 
         return view;
+    }
+
+    public void refreshView(ArrayList<Zoekertje>producten){
+        
     }
 
     // TODO: Rename method, update argument and hook method into UI event

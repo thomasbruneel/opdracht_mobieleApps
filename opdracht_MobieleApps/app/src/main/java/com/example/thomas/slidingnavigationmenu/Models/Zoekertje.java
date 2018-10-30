@@ -13,7 +13,7 @@ public class Zoekertje implements Serializable {
     private String userId;
     private String name;
     private double price;
-    private List<Bieding> biedinglijst;
+    //private List<Bieding> biedinglijst;
 
     public Zoekertje(){
     }
@@ -23,7 +23,7 @@ public class Zoekertje implements Serializable {
         this.userId=userId;
         this.name = name;
         this.price = price;
-        this.biedinglijst = new ArrayList<Bieding>();
+        //this.biedinglijst = new ArrayList<Bieding>();
     }
 
     @Override
@@ -58,11 +58,11 @@ public class Zoekertje implements Serializable {
         this.userId = userID;
     }
 
-    public List<Bieding> getBiedinglijst() {
-        return biedinglijst;
-    }
+    //public List<Bieding> getBiedinglijst() {
+     //   return biedinglijst;
+   // }
 
-    public void setBiedinglijst(List<Bieding> biedinglijst) {
-        this.biedinglijst = biedinglijst;
-    }
+   // public void setBiedinglijst(List<Bieding> biedinglijst) {
+      //  this.biedinglijst = biedinglijst;
+    //}
 }
