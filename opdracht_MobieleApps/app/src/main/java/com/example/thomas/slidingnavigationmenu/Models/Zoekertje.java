@@ -1,6 +1,8 @@
 package com.example.thomas.slidingnavigationmenu.Models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by thomas on 22/10/2018.
@@ -11,6 +13,7 @@ public class Zoekertje implements Serializable {
     private String userId;
     private String name;
     private double price;
+    private List<Bieding> biedinglijst;
 
     public Zoekertje(){
     }
@@ -20,6 +23,7 @@ public class Zoekertje implements Serializable {
         this.userId=userId;
         this.name = name;
         this.price = price;
+        this.biedinglijst = new ArrayList<Bieding>();
     }
 
     @Override
@@ -52,5 +56,13 @@ public class Zoekertje implements Serializable {
 
     public void setUserID(String userID) {
         this.userId = userID;
+    }
+
+    public List<Bieding> getBiedinglijst() {
+        return biedinglijst;
+    }
+
+    public void setBiedinglijst(List<Bieding> biedinglijst) {
+        this.biedinglijst = biedinglijst;
     }
 }
