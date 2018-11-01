@@ -15,15 +15,12 @@ import android.widget.ListView;
 
 import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -98,7 +95,7 @@ public class MijnZoekertjes extends Fragment {
                           }
                           ListView lv=(ListView)view.findViewById(R.id.mijnListView);
 
-                          ArrayAdapter<Zoekertje> adapter=new ArrayAdapter<Zoekertje>(getActivity(),android.R.layout.simple_list_item_1,zoekertjes);
+                          ZoekertjesListAdapter adapter=new ZoekertjesListAdapter(getActivity(),R.layout.customlayout,zoekertjes);
                           lv.setAdapter(adapter);
                           lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                               @Override
@@ -112,10 +109,6 @@ public class MijnZoekertjes extends Fragment {
                       }
                   }
               });
-        //System.out.println("aap" +producten.get(0).toString());
-
-
-
 
         return view;
     }
@@ -155,3 +148,4 @@ public class MijnZoekertjes extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 }
+

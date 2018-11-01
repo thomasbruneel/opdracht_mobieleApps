@@ -7,12 +7,11 @@
 
     <item android:id="@+id/mijnZoekertjes" android:title="mijn zoekertjes" android:icon="@drawable/ic_icon_mijnzoekertjes"/>
 
+    <item android:id="@+id/zoekertjeToevoegen" android:title="zoekertje toevoegen" android:icon="@drawable/ic_icon_addzoekertje"/>
+
     <item android:id="@+id/settings" android:title="Settings" android:icon="@drawable/ic_icon_settings"/>
 
     <item android:id="@+id/about" android:title="About us" android:icon="@drawable/ic_icon_about"/>
-
-    <item android:id="@+id/zoekertjeToevoegen" android:title="zokertje toevoegen" android:icon="@drawable/ic_icon_about"/>
-
 
     <item android:id="@+id/logout" android:title="Logout" android:icon="@drawable/ic_icon_signout"/>
 
