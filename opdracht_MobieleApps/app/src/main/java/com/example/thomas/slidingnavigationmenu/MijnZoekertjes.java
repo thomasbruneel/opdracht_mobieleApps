@@ -16,6 +16,8 @@ import android.widget.ListView;
 import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -80,7 +82,7 @@ public class MijnZoekertjes extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         final View view=inflater.inflate(R.layout.fragment_mijn_zoekertjes, container, false);
-
+        final String id = FirebaseAuth.getInstance().getCurrentUser().getUid() ;          //Id van de huidige user, moet nog checken of ingelogd is
         db=FirebaseFirestore.getInstance();
         db.collection("zoekertjes").get()
               .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -90,8 +92,10 @@ public class MijnZoekertjes extends Fragment {
                       if(task.isSuccessful()){
                           for(QueryDocumentSnapshot document:task.getResult()){
                               Zoekertje zoekertje=document.toObject(Zoekertje.class);
-                              System.out.println("lol"+zoekertje.toString());
-                              zoekertjes.add(zoekertje);
+                              if(zoekertje.getUserID().equals(id)){
+                                  System.out.println("lol"+zoekertje.toString());
+                                  zoekertjes.add(zoekertje);
+                              }
                           }
                           ListView lv=(ListView)view.findViewById(R.id.mijnListView);
 

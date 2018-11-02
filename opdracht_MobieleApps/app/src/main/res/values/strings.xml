@@ -4,7 +4,7 @@
     <string name="close">Close</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Deze Applicatie werd gemaakt door Pieter-Jan Vanhaverbeke en Thomas Bruneel</string>
     <string name="nogGeenAccount"><u>Nog geen account? klik hier"</u></string>
     <string name="terugNaarLogin"><u>Terug naar loginpagina"</u></string>
 
