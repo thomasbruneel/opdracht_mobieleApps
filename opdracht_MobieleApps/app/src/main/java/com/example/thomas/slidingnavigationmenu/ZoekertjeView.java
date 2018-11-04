@@ -23,6 +23,9 @@ public class ZoekertjeView extends AppCompatActivity {
 
         actionBar.setTitle(z.getName()+"  (€ "+z.getPrice()+")");
 
+        TextView tv=(TextView) findViewById(R.id.uiBeschrijving);
+        tv.setText(z.getDescription());
+
     }
 
     public boolean onOptionsItemSelected(MenuItem item){

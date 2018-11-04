@@ -99,11 +99,17 @@ public class ZoekertjeToevoegen extends Fragment {
                 EditText etTitel=(EditText)view.findViewById(R.id.uiTitel);
                 String titel=etTitel.getText().toString();
                 EditText etPrijs=(EditText)view.findViewById(R.id.uiPrijs);
-                //eventuele errors
                 double prijs=Double.parseDouble(etPrijs.getText().toString());
+                EditText etBeschrijving=(EditText)view.findViewById(R.id.uiBeschrijving);
+                String beschrijving=etBeschrijving.getText().toString();
+
+                //eventuele errors
+
                 String userID=fbauth.getCurrentUser().getUid();
 
-                Zoekertje zoekertje=new Zoekertje(userID,titel,prijs);
+
+
+                Zoekertje zoekertje=new Zoekertje(userID,titel,prijs,beschrijving);
                 CollectionReference dbZoekertjes=db.collection("zoekertjes");
                 dbZoekertjes.add(zoekertje).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override

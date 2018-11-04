@@ -13,16 +13,18 @@ public class Zoekertje implements Serializable {
     private String userId;
     private String name;
     private double price;
+    private String description;
     //private List<Bieding> biedinglijst;
 
     public Zoekertje(){
     }
 
-    public Zoekertje(String userId,String name, double price) {
+    public Zoekertje(String userId,String name, double price,String description) {
 
         this.userId=userId;
         this.name = name;
         this.price = price;
+        this.description=description;
         //this.biedinglijst = new ArrayList<Bieding>();
     }
 
@@ -56,6 +58,14 @@ public class Zoekertje implements Serializable {
 
     public void setUserID(String userID) {
         this.userId = userID;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     //public List<Bieding> getBiedinglijst() {
