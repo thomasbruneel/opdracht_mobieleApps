@@ -6,11 +6,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
@@ -45,6 +48,7 @@ public class MijnZoekertjes extends Fragment {
 
     private FirebaseFirestore db;
     private ArrayList<Zoekertje>zoekertjes;
+    private ZoekertjesListAdapter adapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -99,8 +103,9 @@ public class MijnZoekertjes extends Fragment {
                           }
                           ListView lv=(ListView)view.findViewById(R.id.mijnListView);
 
-                          ZoekertjesListAdapter adapter=new ZoekertjesListAdapter(getActivity(),R.layout.customlayout,zoekertjes);
+                          adapter=new ZoekertjesListAdapter(getActivity(),R.layout.customlayout,zoekertjes);
                           lv.setAdapter(adapter);
+                          lv.setTextFilterEnabled(true);
                           lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                               @Override
                               public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -108,6 +113,25 @@ public class MijnZoekertjes extends Fragment {
                                   Intent intent = new Intent(view.getContext(),ZoekertjeView.class);
                                   intent.putExtra("mijnZoekertje",z);
                                   startActivity(intent);
+                              }
+                          });
+
+                          EditText et=(EditText)view.findViewById(R.id.zoekveld);
+                          et.addTextChangedListener(new TextWatcher() {
+
+                              public void onTextChanged(CharSequence arg0, int arg1, int arg2,
+                                                        int arg3) {
+
+                              }
+
+                              public void beforeTextChanged(CharSequence arg0, int arg1,
+                                                            int arg2, int arg3) {
+
+                              }
+
+                              public void afterTextChanged(Editable arg0) {
+                                  adapter.getFilter().filter(arg0);
+
                               }
                           });
                       }

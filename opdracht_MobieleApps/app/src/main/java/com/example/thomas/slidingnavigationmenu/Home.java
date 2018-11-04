@@ -6,10 +6,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
@@ -42,6 +46,7 @@ public class Home extends Fragment {
 
     private FirebaseFirestore db;
     private ArrayList<Zoekertje>zoekertjes;
+    private ZoekertjesListAdapter adapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -86,6 +91,7 @@ public class Home extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);//voorkomt dat toetsenbord gepopped wordt bij edittext
         final View view=inflater.inflate(R.layout.fragment_home, container, false);
 
         db= FirebaseFirestore.getInstance();
@@ -101,8 +107,9 @@ public class Home extends Fragment {
                             }
                             ListView lv=(ListView)view.findViewById(R.id.mijnListView);
 
-                            ZoekertjesListAdapter adapter=new ZoekertjesListAdapter(getActivity(),R.layout.customlayout,zoekertjes);
+                            adapter=new ZoekertjesListAdapter(getActivity(),R.layout.customlayout,zoekertjes);
                             lv.setAdapter(adapter);
+                            lv.setTextFilterEnabled(true);
                             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -112,6 +119,26 @@ public class Home extends Fragment {
                                     startActivity(intent);
                                 }
                             });
+
+                            EditText et=(EditText)view.findViewById(R.id.zoekveld);
+                            et.addTextChangedListener(new TextWatcher() {
+
+                                public void onTextChanged(CharSequence arg0, int arg1, int arg2,
+                                                          int arg3) {
+
+                                }
+
+                                public void beforeTextChanged(CharSequence arg0, int arg1,
+                                                              int arg2, int arg3) {
+
+                                }
+
+                                public void afterTextChanged(Editable arg0) {
+                                    adapter.getFilter().filter(arg0);
+
+                                }
+                            });
+
                         }
                     }
                 });
