@@ -2,15 +2,22 @@ package com.example.thomas.slidingnavigationmenu;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +34,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import static android.app.Activity.RESULT_OK;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +50,9 @@ public class ZoekertjeToevoegen extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    static final int REQUEST_IMAGE_CAPTURE=1;
+    View view;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -86,7 +98,7 @@ public class ZoekertjeToevoegen extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        final View view=inflater.inflate(R.layout.fragment_zoekertje_toevoegen, container, false);
+        view=inflater.inflate(R.layout.fragment_zoekertje_toevoegen, container, false);
         fbauth= FirebaseAuth.getInstance();
         db=FirebaseFirestore.getInstance();
 
@@ -106,8 +118,6 @@ public class ZoekertjeToevoegen extends Fragment {
                 //eventuele errors
 
                 String userID=fbauth.getCurrentUser().getUid();
-
-
 
                 Zoekertje zoekertje=new Zoekertje(userID,titel,prijs,beschrijving);
                 CollectionReference dbZoekertjes=db.collection("zoekertjes");
@@ -129,8 +139,30 @@ public class ZoekertjeToevoegen extends Fragment {
             }
         });
 
+        //foto trekken en foto weergen in imageview
+        ImageButton b = (ImageButton) view.findViewById(R.id.uiTakePictureButton);
+        b.setBackgroundDrawable(null);
+        b.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(getActivity().getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
+                    Log.i("camera","device heeft camera");
+                    dispatchTakePictureIntent();
+                }
+                else{
+                    Log.i("camera","device heeft geen camera");
+                }
+            }
+        });
+
+
 
         return view;
+    }
+
+    private void dispatchTakePictureIntent(){
+        Intent takePictureIntent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        getActivity().startActivityForResult(takePictureIntent,REQUEST_IMAGE_CAPTURE);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -2,6 +2,7 @@ package com.example.thomas.slidingnavigationmenu;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     View headerView;
 
     private FirebaseAuth fbauht;
+
+    static final int REQUEST_IMAGE_CAPTURE=1;
 
 
     @Override
@@ -137,6 +141,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    // code voor foto trekken --> word onmiddelijk uitgevoerd na startActivityForResult
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        ImageView afbeelding=(ImageView) findViewById(R.id.afbeelding);
+        if(requestCode==REQUEST_IMAGE_CAPTURE&&resultCode==RESULT_OK){
+            Bundle extras =data.getExtras();
+            Bitmap imageBitmap=(Bitmap) extras.get("data");
+            afbeelding.setImageBitmap(imageBitmap);
+
+        }
     }
 
 
