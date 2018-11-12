@@ -52,6 +52,7 @@ public class ZoekertjeToevoegen extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     static final int REQUEST_IMAGE_CAPTURE=1;
+    static final int REQUEST_IMAGE_GALLERY=2;
     View view;
 
     // TODO: Rename and change types of parameters
@@ -139,7 +140,7 @@ public class ZoekertjeToevoegen extends Fragment {
             }
         });
 
-        //foto trekken en foto weergen in imageview
+        //foto trekken en foto weergeven in imageview
         ImageButton b = (ImageButton) view.findViewById(R.id.uiTakePictureButton);
         b.setBackgroundDrawable(null);
         b.setOnClickListener( new View.OnClickListener() {
@@ -155,14 +156,31 @@ public class ZoekertjeToevoegen extends Fragment {
             }
         });
 
+        //foto uit gallery halen en foto weergeven in imageview
+        ImageButton b2 = (ImageButton) view.findViewById(R.id.uiGalleryButton);
+        b2.setBackgroundDrawable(null);
+        b2.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    dispatchGalleryPictureIntent();
+            }
+        });
+
 
 
         return view;
     }
-
+    //foto trekken
     private void dispatchTakePictureIntent(){
         Intent takePictureIntent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         getActivity().startActivityForResult(takePictureIntent,REQUEST_IMAGE_CAPTURE);
+    }
+
+    //foto uit gallerij
+    private void dispatchGalleryPictureIntent(){
+        Intent galleryIntent=new Intent(Intent.ACTION_PICK);
+        galleryIntent.setType("image/*");
+        getActivity().startActivityForResult(galleryIntent,REQUEST_IMAGE_GALLERY);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
