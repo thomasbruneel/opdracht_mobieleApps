@@ -5,7 +5,7 @@ import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
 @Entity
-public class Zoekertje {
+public class ZoekertjeDB {
     @NonNull
     @PrimaryKey
     private int zoekertjeid;
@@ -15,7 +15,7 @@ public class Zoekertje {
     private double prijs;
 
 
-    public Zoekertje() {
+    public ZoekertjeDB() {
     }
 
 }

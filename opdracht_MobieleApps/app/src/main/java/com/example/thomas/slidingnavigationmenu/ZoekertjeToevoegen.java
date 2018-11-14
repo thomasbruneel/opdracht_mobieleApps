@@ -1,5 +1,6 @@
 package com.example.thomas.slidingnavigationmenu;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -22,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
+import com.example.thomas.slidingnavigationmenu.Room.AppDatabase;
+import com.example.thomas.slidingnavigationmenu.Room.ContactDAO;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -117,24 +120,12 @@ public class ZoekertjeToevoegen extends Fragment {
                 String beschrijving=etBeschrijving.getText().toString();
 
                 //eventuele errors
+                AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, "db-contacts")
+                        .allowMainThreadQueries()   //Allows room to do operation on main thread
+                        .build();
+                ContactDAO contactDAO = database.getContactDAO();
+                Zoekertje zoekertje=new Zoekertje();
 
-                String userID=fbauth.getCurrentUser().getUid();
-
-                Zoekertje zoekertje=new Zoekertje(userID,titel,prijs,beschrijving);
-                CollectionReference dbZoekertjes=db.collection("zoekertjes");
-                dbZoekertjes.add(zoekertje).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(getActivity(),"zoekertje succesvol toegevoegd",Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(),e.getMessage(),Toast.LENGTH_SHORT).show();
-
-
-                    }
-                });
 
 
             }
