@@ -19,10 +19,10 @@ public interface ContactDAO {
     @Delete
     public void delete(ZoekertjeDB zoekertje);
 
-    @Query("SELECT * FROM ZoekertjeDB")
+    @Query("SELECT * FROM zoekertje")
     public List<ZoekertjeDB> getZoekertjes();
 
-    @Query("SELECT * FROM ZoekertjeDB WHERE zoekertjeid = :id")
+    @Query("SELECT * FROM zoekertje WHERE zoekertjeid = :id")
     public ZoekertjeDB getZoekertjes(int id);
 }
 

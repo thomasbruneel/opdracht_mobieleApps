@@ -4,10 +4,10 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-@Entity
+@Entity(tableName = "Zoekertje")
 public class ZoekertjeDB {
     @NonNull
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int zoekertjeid;
 
     private String titel;

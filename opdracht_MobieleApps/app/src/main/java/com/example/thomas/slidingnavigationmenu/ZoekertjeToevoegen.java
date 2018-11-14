@@ -121,9 +121,11 @@ public class ZoekertjeToevoegen extends Fragment {
                 String beschrijving=etBeschrijving.getText().toString();
 
                 //eventuele errors
-                AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, "db-contacts")
+                AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, "appdatabase.db")
                         .allowMainThreadQueries()   //Allows room to do operation on main thread
                         .build();
+                String currentDBPath=getContext().getDatabasePath("appdatabase").getAbsolutePath();
+                System.out.println("pad database "+currentDBPath);
                 ContactDAO contactDAO = database.getContactDAO();
                 ZoekertjeDB zoekertje=new ZoekertjeDB();
                 zoekertje.setTitel(titel);
