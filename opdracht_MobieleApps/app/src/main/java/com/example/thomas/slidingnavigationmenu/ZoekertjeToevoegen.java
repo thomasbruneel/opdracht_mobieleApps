@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
 import com.example.thomas.slidingnavigationmenu.Room.AppDatabase;
 import com.example.thomas.slidingnavigationmenu.Room.ContactDAO;
+import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -124,7 +125,11 @@ public class ZoekertjeToevoegen extends Fragment {
                         .allowMainThreadQueries()   //Allows room to do operation on main thread
                         .build();
                 ContactDAO contactDAO = database.getContactDAO();
-                Zoekertje zoekertje=new Zoekertje();
+                ZoekertjeDB zoekertje=new ZoekertjeDB();
+                zoekertje.setTitel(titel);
+                zoekertje.setBeschrijving(beschrijving);
+                zoekertje.setPrijs(prijs);
+                contactDAO.insert(zoekertje);
 
 
 
