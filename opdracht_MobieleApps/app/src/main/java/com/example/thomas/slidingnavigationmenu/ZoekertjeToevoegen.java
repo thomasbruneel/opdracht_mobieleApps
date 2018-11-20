@@ -133,7 +133,7 @@ public class ZoekertjeToevoegen extends Fragment {
                 zoekertje.setPrijs(prijs);
                 contactDAO.insert(zoekertje);
 
-
+                Toast.makeText(getActivity(),"met succes zoekertje toegevoegd",Toast.LENGTH_SHORT).show();
 
             }
         });
