@@ -1,5 +1,6 @@
 package com.example.thomas.slidingnavigationmenu.Room;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
@@ -11,11 +12,6 @@ import java.util.List;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
-
-
-
-
-//@Entity(tableName = "Zoekertje")
 @Entity(tableName = "Zoekertje",
         foreignKeys = @ForeignKey(entity = UserDB.class,
         parentColumns = "userid",
@@ -30,12 +26,10 @@ public class ZoekertjeDB implements Serializable {
     private String beschrijving;
     private double prijs;
 
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    private byte[] foto;
+
     private int userid;
-
-  //  @Relation(parentColumn = "zoekertjeid", entityColumn = "biedingid")
-  //  public List<BiedingDB> biedingDBList;
-
-
 
     public ZoekertjeDB() {
     }
@@ -79,6 +73,14 @@ public class ZoekertjeDB implements Serializable {
 
     public void setUserid(int userid) {
         this.userid = userid;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 
     @Override
