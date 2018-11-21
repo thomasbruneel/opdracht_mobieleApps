@@ -1,5 +1,6 @@
 package com.example.thomas.slidingnavigationmenu;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -11,12 +12,16 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
+import com.example.thomas.slidingnavigationmenu.Room.AppDatabase;
+import com.example.thomas.slidingnavigationmenu.Room.ContactDAO;
+import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +31,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -85,58 +91,49 @@ public class MijnZoekertjes extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        final View view=inflater.inflate(R.layout.fragment_mijn_zoekertjes, container, false);
-        final String id = FirebaseAuth.getInstance().getCurrentUser().getUid() ;          //Id van de huidige user, moet nog checken of ingelogd is
-        db=FirebaseFirestore.getInstance();
-        db.collection("zoekertjes").get()
-              .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                  @Override
-                  public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                      zoekertjes=new ArrayList<Zoekertje>();
-                      if(task.isSuccessful()){
-                          for(QueryDocumentSnapshot document:task.getResult()){
-                              Zoekertje zoekertje=document.toObject(Zoekertje.class);
-                              if(zoekertje.getUserID().equals(id)){
-                                  System.out.println("lol"+zoekertje.toString());
-                                  zoekertjes.add(zoekertje);
-                              }
-                          }
-                          ListView lv=(ListView)view.findViewById(R.id.mijnListView);
 
-                          adapter=new ZoekertjesListAdapter(getActivity(),R.layout.customlayout,zoekertjes);
-                          lv.setAdapter(adapter);
-                          lv.setTextFilterEnabled(true);
-                          lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                              @Override
-                              public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                  Zoekertje z = (Zoekertje) (parent.getItemAtPosition(position));
-                                  Intent intent = new Intent(view.getContext(),ZoekertjeView.class);
-                                  intent.putExtra("mijnZoekertje",z);
-                                  startActivity(intent);
-                              }
-                          });
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);//voorkomt dat toetsenbord gepopped wordt bij edittext
+        final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-                          EditText et=(EditText)view.findViewById(R.id.zoekveld);
-                          et.addTextChangedListener(new TextWatcher() {
+        List<ZoekertjeDB> zoekertjes = new ArrayList<ZoekertjeDB>();
+        AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, "appdatabase.db")
+                .allowMainThreadQueries()   //Allows room to do operation on main thread
+                .build();
+        String currentDBPath = getContext().getDatabasePath("appdatabase").getAbsolutePath();
 
-                              public void onTextChanged(CharSequence arg0, int arg1, int arg2,
-                                                        int arg3) {
+        ContactDAO contactDAO = database.getContactDAO();
+        //TODO: enkel eigen zoekertjes opvragen
+        zoekertjes = contactDAO.getZoekertjes();
+        ListView lv = (ListView) view.findViewById(R.id.mijnListView);
 
-                              }
+        adapter = new ZoekertjesListAdapter(getActivity(), R.layout.customlayout, zoekertjes);
+        lv.setAdapter(adapter);
+        lv.setTextFilterEnabled(true);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ZoekertjeDB z = (ZoekertjeDB) (parent.getItemAtPosition(position));
+                Intent intent = new Intent(view.getContext(), ZoekertjeView.class);
+                intent.putExtra("mijnZoekertje", z);
+                startActivity(intent);
+            }
+        });
 
-                              public void beforeTextChanged(CharSequence arg0, int arg1,
-                                                            int arg2, int arg3) {
+        EditText et = (EditText) view.findViewById(R.id.zoekveld);
+        et.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
 
-                              }
+            }
 
-                              public void afterTextChanged(Editable arg0) {
-                                  adapter.getFilter().filter(arg0);
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
 
-                              }
-                          });
-                      }
-                  }
-              });
+            }
+
+            public void afterTextChanged(Editable arg0) {
+                adapter.getFilter().filter(arg0);
+
+            }
+        });
 
         return view;
     }
