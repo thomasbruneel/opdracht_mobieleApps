@@ -1,5 +1,6 @@
 package com.example.thomas.slidingnavigationmenu;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,6 +18,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
+import com.example.thomas.slidingnavigationmenu.Room.AppDatabase;
+import com.example.thomas.slidingnavigationmenu.Room.ContactDAO;
+import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -24,6 +28,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -45,7 +50,6 @@ public class Home extends Fragment {
     private String mParam2;
 
     private FirebaseFirestore db;
-    private ArrayList<Zoekertje>zoekertjes;
     private ZoekertjesListAdapter adapter;
 
     private OnFragmentInteractionListener mListener;
@@ -94,54 +98,43 @@ public class Home extends Fragment {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);//voorkomt dat toetsenbord gepopped wordt bij edittext
         final View view=inflater.inflate(R.layout.fragment_home, container, false);
 
-        db= FirebaseFirestore.getInstance();
-        db.collection("zoekertjes").get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        zoekertjes=new ArrayList<Zoekertje>();
-                        if(task.isSuccessful()){
-                            for(QueryDocumentSnapshot document:task.getResult()){
-                                Zoekertje zoekertje=document.toObject(Zoekertje.class);
-                                zoekertjes.add(zoekertje);
-                            }
-                            ListView lv=(ListView)view.findViewById(R.id.mijnListView);
+        List<ZoekertjeDB>zoekertjes=new ArrayList<ZoekertjeDB>();
+        AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, "appdatabase.db")
+                .allowMainThreadQueries()   //Allows room to do operation on main thread
+                .build();
+        String currentDBPath=getContext().getDatabasePath("appdatabase").getAbsolutePath();
 
-                            adapter=new ZoekertjesListAdapter(getActivity(),R.layout.customlayout,zoekertjes);
-                            lv.setAdapter(adapter);
-                            lv.setTextFilterEnabled(true);
-                            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ContactDAO contactDAO = database.getContactDAO();
+        zoekertjes= contactDAO.getZoekertjes();
+        ListView lv=(ListView)view.findViewById(R.id.mijnListView);
+
+        adapter=new ZoekertjesListAdapter(getActivity(),R.layout.customlayout,zoekertjes);
+        lv.setAdapter(adapter);
+        lv.setTextFilterEnabled(true);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    Zoekertje z = (Zoekertje) (parent.getItemAtPosition(position));
+                                    ZoekertjeDB z = (ZoekertjeDB) (parent.getItemAtPosition(position));
                                     Intent intent = new Intent(view.getContext(),ZoekertjeView.class);
                                     intent.putExtra("mijnZoekertje",z);
                                     startActivity(intent);
                                 }
                             });
 
-                            EditText et=(EditText)view.findViewById(R.id.zoekveld);
-                            et.addTextChangedListener(new TextWatcher() {
+        EditText et=(EditText)view.findViewById(R.id.zoekveld);
+        et.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
 
-                                public void onTextChanged(CharSequence arg0, int arg1, int arg2,
-                                                          int arg3) {
+            }
 
-                                }
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
 
-                                public void beforeTextChanged(CharSequence arg0, int arg1,
-                                                              int arg2, int arg3) {
+            }
 
-                                }
-
-                                public void afterTextChanged(Editable arg0) {
-                                    adapter.getFilter().filter(arg0);
+            public void afterTextChanged(Editable arg0) {adapter.getFilter().filter(arg0);
 
                                 }
-                            });
-
-                        }
-                    }
-                });
+        });
 
         return view;
     }

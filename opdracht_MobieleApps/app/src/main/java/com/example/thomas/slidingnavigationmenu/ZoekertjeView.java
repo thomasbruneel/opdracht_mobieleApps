@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
+import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
 
 public class ZoekertjeView extends AppCompatActivity {
 
@@ -16,15 +17,15 @@ public class ZoekertjeView extends AppCompatActivity {
         setContentView(R.layout.activity_zoekertje_view);
 
         Intent i = getIntent();
-        Zoekertje z = (Zoekertje) i.getSerializableExtra("mijnZoekertje");
+        ZoekertjeDB z = (ZoekertjeDB) i.getSerializableExtra("mijnZoekertje");
 
         android.support.v7.app.ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        actionBar.setTitle(z.getName()+"  (€ "+z.getPrice()+")");
+        actionBar.setTitle(z.getTitel()+"  (€ "+z.getPrijs()+")");
 
         TextView tv=(TextView) findViewById(R.id.uiBeschrijving);
-        tv.setText(z.getDescription());
+        tv.setText(z.getBeschrijving());
 
     }
 
