@@ -10,7 +10,7 @@ import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "Bieding",
-        foreignKeys = @ForeignKey(entity = UserDB.class,
+        foreignKeys = @ForeignKey(entity = ZoekertjeDB.class,
                 parentColumns = "zoekertjeid",
                 childColumns = "zoekertjeid",
                 onDelete = CASCADE))
