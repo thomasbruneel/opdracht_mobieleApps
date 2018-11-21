@@ -6,6 +6,8 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
+import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
+
 import java.util.List;
 
 @Dao
@@ -24,5 +26,10 @@ public interface ContactDAO {
 
     @Query("SELECT * FROM zoekertje WHERE zoekertjeid = :id")
     public ZoekertjeDB getZoekertjes(int id);
-}
 
+
+    @Query("SELECT * FROM zoekertje WHERE userid=:userid")
+    List<ZoekertjeDB> findRepositoriesForUser(int userid);
+
+
+}
