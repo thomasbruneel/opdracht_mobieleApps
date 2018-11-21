@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -38,6 +39,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.io.ByteArrayOutputStream;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -121,6 +124,12 @@ public class ZoekertjeToevoegen extends Fragment {
                 EditText etBeschrijving=(EditText)view.findViewById(R.id.uiBeschrijving);
                 String beschrijving=etBeschrijving.getText().toString();
 
+                ImageView imageView = (ImageView) view.findViewById(R.id.afbeelding);
+                Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                byte[] imageInByte = baos.toByteArray();
+
                 //eventuele errors
                 AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, "appdatabase.db")
                         .allowMainThreadQueries()   //Allows room to do operation on main thread
@@ -133,6 +142,10 @@ public class ZoekertjeToevoegen extends Fragment {
                 zoekertje.setBeschrijving(beschrijving);
                 zoekertje.setPrijs(prijs);
                 zoekertje.setUserid(1);
+                zoekertje.setFoto(imageInByte);
+                //UserDB user=new UserDB();
+                //user.setName("thomas");
+                //contactDAO.insert(user);
                 contactDAO.insert(zoekertje);
 
                 Toast.makeText(getActivity(),"met succes zoekertje toegevoegd",Toast.LENGTH_SHORT).show();
