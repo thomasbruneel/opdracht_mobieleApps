@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
 import com.example.thomas.slidingnavigationmenu.Room.AppDatabase;
 import com.example.thomas.slidingnavigationmenu.Room.ContactDAO;
+import com.example.thomas.slidingnavigationmenu.Room.UserDB;
 import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -131,6 +132,7 @@ public class ZoekertjeToevoegen extends Fragment {
                 zoekertje.setTitel(titel);
                 zoekertje.setBeschrijving(beschrijving);
                 zoekertje.setPrijs(prijs);
+                zoekertje.setUserid(1);
                 contactDAO.insert(zoekertje);
 
                 Toast.makeText(getActivity(),"met succes zoekertje toegevoegd",Toast.LENGTH_SHORT).show();

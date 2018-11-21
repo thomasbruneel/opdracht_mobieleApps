@@ -31,5 +31,15 @@ public interface ContactDAO {
     @Query("SELECT * FROM zoekertje WHERE userid=:userid")
     List<ZoekertjeDB> findRepositoriesForUser(int userid);
 
+    //user table
+    @Insert
+    public void insert(UserDB user);
+
+    @Update
+    public void update(UserDB user);
+
+    @Delete
+    public void delete(UserDB user);
+
 
 }

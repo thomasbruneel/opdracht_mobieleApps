@@ -13,7 +13,6 @@ import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
         private int biedingid;
 
 
-        private Zoekertje zoekertje;
         private String naambieder;
         private double biedingprijs;
 
@@ -27,14 +26,6 @@ import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
 
         public void setBiedingid(@NonNull int biedingid) {
             this.biedingid = biedingid;
-        }
-
-        public Zoekertje getZoekertje() {
-            return zoekertje;
-        }
-
-        public void setZoekertje(Zoekertje zoekertje) {
-            this.zoekertje = zoekertje;
         }
 
         public String getNaambieder() {
