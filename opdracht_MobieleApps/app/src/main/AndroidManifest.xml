@@ -20,6 +20,13 @@
         </activity>
         <activity android:name=".Registratie" />
         <activity android:name=".ZoekertjeView"></activity>
+
+        <receiver
+            android:name=".ConnectionReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
