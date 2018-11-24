@@ -55,8 +55,11 @@ public class ZoekertjesListAdapter extends ArrayAdapter<ZoekertjeDB> {
         tvPrice.setText("prijs: €"+price);
 
         byte[] image=getItem(position).getFoto();
-        Bitmap bmp = BitmapFactory.decodeByteArray(image, 0, image.length);
-        afbeelding.setImageBitmap(bmp);
+        if(image!=null){
+            Bitmap bmp = BitmapFactory.decodeByteArray(image, 0, image.length);
+            afbeelding.setImageBitmap(bmp);
+        }
+
         //afbeelding.setImageBitmap(Bitmap.createScaledBitmap(bmp, afbeelding.getWidth(),
                // afbeelding.getHeight(), false));
 

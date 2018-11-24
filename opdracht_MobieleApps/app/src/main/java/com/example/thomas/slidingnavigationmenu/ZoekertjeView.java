@@ -1,9 +1,12 @@
 package com.example.thomas.slidingnavigationmenu;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
@@ -26,6 +29,10 @@ public class ZoekertjeView extends AppCompatActivity {
 
         TextView tv=(TextView) findViewById(R.id.uiBeschrijving);
         tv.setText(z.getBeschrijving());
+
+        ImageView iv=(ImageView) findViewById(R.id.afbeelding);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(z.getFoto(), 0, z.getFoto().length);
+        iv.setImageBitmap(bitmap);
 
     }
 
