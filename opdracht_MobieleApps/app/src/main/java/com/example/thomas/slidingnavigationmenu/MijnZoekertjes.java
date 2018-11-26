@@ -172,5 +172,19 @@ public class MijnZoekertjes extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        System.out.println("refreshen!!!!!!!!!!!!!!!!");
+        AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, "appdatabase.db")
+                .allowMainThreadQueries()   //Allows room to do operation on main thread
+                .build();
+        String currentDBPath=getContext().getDatabasePath("appdatabase").getAbsolutePath();
+
+        ContactDAO contactDAO = database.getContactDAO();
+        List<ZoekertjeDB>zoekertjes=contactDAO.getZoekertjes();
+        adapter.notifyDataSetChanged(zoekertjes);
+    }
 }
 

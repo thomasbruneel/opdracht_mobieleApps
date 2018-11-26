@@ -180,9 +180,13 @@ public class Home extends Fragment {
     public void onResume(){
         super.onResume();
         System.out.println("refreshen!!!!!!!!!!!!!!!!");
+        AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, "appdatabase.db")
+                .allowMainThreadQueries()   //Allows room to do operation on main thread
+                .build();
+        String currentDBPath=getContext().getDatabasePath("appdatabase").getAbsolutePath();
 
-
-
-
+        ContactDAO contactDAO = database.getContactDAO();
+        List<ZoekertjeDB>zoekertjes=contactDAO.getZoekertjes();
+        adapter.notifyDataSetChanged(zoekertjes);
     }
 }

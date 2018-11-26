@@ -66,4 +66,9 @@ public class ZoekertjesListAdapter extends ArrayAdapter<ZoekertjeDB> {
         return convertView;
 
     }
+
+    public void notifyDataSetChanged(List<ZoekertjeDB> zoekertjes) {
+        this.clear();
+        this.addAll(zoekertjes);
+    }
 }
