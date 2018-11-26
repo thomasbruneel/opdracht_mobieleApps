@@ -56,6 +56,12 @@ public class ZoekertjeView extends AppCompatActivity {
                 Toast.makeText(this,"met succes zoekertje verwijdert",Toast.LENGTH_SHORT).show();
                 finish();
                 break;
+
+            case R.id.action_contact:
+                Intent intent=new Intent(this,Email.class);
+                intent.putExtra("subject", z.getBeschrijving());
+                startActivity(intent);
+                break;
             default:
                 finish();
                 return super.onOptionsItemSelected(item);

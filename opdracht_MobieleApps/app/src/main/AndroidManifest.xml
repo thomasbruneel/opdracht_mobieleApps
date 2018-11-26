@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
@@ -19,14 +20,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".Registratie" />
-        <activity android:name=".ZoekertjeView"></activity>
+        <activity android:name=".ZoekertjeView" />
 
-        <receiver
-            android:name=".ConnectionReceiver">
+        <receiver android:name=".ConnectionReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".Email"></activity>
     </application>
 
 </manifest>
