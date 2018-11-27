@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Registratie" />
-        <activity android:name=".ZoekertjeView" />
+        <activity android:name=".ZoekertjeViewOwner" />
 
         <receiver android:name=".ConnectionReceiver">
             <intent-filter>
@@ -28,7 +28,8 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".Email"></activity>
+        <activity android:name=".Email" />
+        <activity android:name=".ZoekertjeViewPublic"></activity>
     </application>
 
 </manifest>

@@ -1,12 +1,9 @@
 package com.example.thomas.slidingnavigationmenu;
 
 import android.arch.persistence.room.Room;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,18 +12,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
 import com.example.thomas.slidingnavigationmenu.Room.AppDatabase;
 import com.example.thomas.slidingnavigationmenu.Room.ContactDAO;
 import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
 
-public class ZoekertjeView extends AppCompatActivity {
+public class ZoekertjeViewOwner extends AppCompatActivity {
     ZoekertjeDB z;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_zoekertje_view);
+        setContentView(R.layout.activity_zoekertje_view_owner);
 
         Intent i = getIntent();
         z = (ZoekertjeDB) i.getSerializableExtra("mijnZoekertje");
@@ -56,12 +52,6 @@ public class ZoekertjeView extends AppCompatActivity {
                 Toast.makeText(this,"met succes zoekertje verwijdert",Toast.LENGTH_SHORT).show();
                 finish();
                 break;
-
-            case R.id.action_contact:
-                Intent intent=new Intent(this,Email.class);
-                intent.putExtra("subject", z.getBeschrijving());
-                startActivity(intent);
-                break;
             default:
                 finish();
                 return super.onOptionsItemSelected(item);
@@ -73,7 +63,7 @@ public class ZoekertjeView extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.zoekertjeviewmenu, menu);
+        getMenuInflater().inflate(R.menu.zoekertjeviewmenuowner, menu);
         return true;
     }
 

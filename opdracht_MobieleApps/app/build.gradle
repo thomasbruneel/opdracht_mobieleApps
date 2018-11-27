@@ -39,7 +39,6 @@ dependencies {
     compile 'com.android.support:design:26.1.0'
     compile 'com.google.firebase:firebase-firestore:11.4.2'
 
-
     //toegevoegd voor firebase
 
     implementation 'com.google.firebase:firebase-core:16.0.1'
