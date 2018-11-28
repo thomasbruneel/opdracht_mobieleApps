@@ -19,7 +19,6 @@ import android.widget.ListView;
 import com.example.thomas.slidingnavigationmenu.Room.AppDatabase;
 import com.example.thomas.slidingnavigationmenu.Room.ContactDAO;
 import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,6 @@ public class Home extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private FirebaseFirestore db;
     private ZoekertjesListAdapter adapter;
 
     private OnFragmentInteractionListener mListener;
