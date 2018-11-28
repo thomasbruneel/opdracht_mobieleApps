@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -40,6 +41,8 @@ public class Login extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    GoogleSignInClient mGoogleSignInClient;
 
     public Login() {
         // Required empty public constructor
@@ -96,7 +99,7 @@ public class Login extends Fragment {
                         .build();
 
                 // Build a GoogleSignInClient with the options specified by gso.
-                mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+                 mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
 
 
 
@@ -140,6 +143,7 @@ public class Login extends Fragment {
 
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        int RC_SIGN_IN = 12500;
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
