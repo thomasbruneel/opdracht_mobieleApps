@@ -22,7 +22,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -33,7 +32,6 @@ public class MainActivity extends AppCompatActivity{
     NavigationView nv;
     View headerView;
 
-    private FirebaseAuth fbauht;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_IMAGE_GALLERY = 2;
@@ -46,7 +44,6 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fbauht = FirebaseAuth.getInstance();
 
         mijnDrawer = (DrawerLayout) findViewById(R.id.drawer);
         mijnToggle = new ActionBarDrawerToggle(this, mijnDrawer, R.string.open, R.string.close);
@@ -58,11 +55,6 @@ public class MainActivity extends AppCompatActivity{
         setupDrawerContent(nv);
         headerView = nv.getHeaderView(0);
         TextView tv = (TextView) headerView.findViewById(R.id.uiCurrentUser);
-        if (fbauht.getCurrentUser() != null) {
-            tv.setText(" email: " + fbauht.getCurrentUser().getEmail());
-            System.out.println("user is online");
-            System.out.println("kip " + fbauht.getCurrentUser().getUid());
-        }
 
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -120,11 +112,6 @@ public class MainActivity extends AppCompatActivity{
                 break;
 
             case R.id.logout:
-                fbauht.signOut();
-                TextView tv = (TextView) headerView.findViewById(R.id.uiCurrentUser);
-                if (fbauht.getCurrentUser() == null) {
-                    tv.setText("");
-                }
                 fragmentClass = Home.class;
                 break;
 

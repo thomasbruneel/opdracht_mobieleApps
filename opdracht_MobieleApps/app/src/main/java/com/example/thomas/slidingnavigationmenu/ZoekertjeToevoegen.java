@@ -32,13 +32,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
 
@@ -67,9 +60,6 @@ public class ZoekertjeToevoegen extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private FirebaseAuth fbauth;
-
-    private FirebaseFirestore db;
 
 
     private OnFragmentInteractionListener mListener;
@@ -108,8 +98,6 @@ public class ZoekertjeToevoegen extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.fragment_zoekertje_toevoegen, container, false);
-        fbauth= FirebaseAuth.getInstance();
-        db=FirebaseFirestore.getInstance();
 
         Button button=(Button) view.findViewById(R.id.uiToevoegButton);
         button.setOnClickListener(new View.OnClickListener()

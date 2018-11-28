@@ -12,12 +12,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class Registratie extends AppCompatActivity {
-    private FirebaseAuth fbauth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +23,6 @@ public class Registratie extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Registratie");
 
-        fbauth=FirebaseAuth.getInstance();
 
 
 
@@ -50,19 +45,7 @@ public class Registratie extends AppCompatActivity {
         String herhaalWachtwoord=etHerhaalWachtwoord.getText().toString();
         System.out.println(herhaalWachtwoord);
 
-    fbauth.createUserWithEmailAndPassword(gebruikersNaam,wachtwoord)
-            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful()){
-                        Toast.makeText(Registratie.this,"met succes geregistreerd",Toast.LENGTH_SHORT).show();
-                    }
-                    else{
-                        Toast.makeText(Registratie.this,"probleempje",Toast.LENGTH_SHORT).show();
 
-                    }
-                }
-            });
 
 
     }
