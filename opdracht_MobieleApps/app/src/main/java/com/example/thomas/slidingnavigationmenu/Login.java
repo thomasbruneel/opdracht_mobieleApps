@@ -100,6 +100,8 @@ public class Login extends Fragment {
 
                 // Build a GoogleSignInClient with the options specified by gso.
                  mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
+                 signIn();              //STARTEN NIEUWE ACTIVITY
+
 
 
 
@@ -144,7 +146,7 @@ public class Login extends Fragment {
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         int RC_SIGN_IN = 12500;
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+        getActivity().startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
 
