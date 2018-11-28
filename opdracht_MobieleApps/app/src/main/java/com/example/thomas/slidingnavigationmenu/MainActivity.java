@@ -22,11 +22,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.io.FileNotFoundException;
@@ -44,6 +47,10 @@ public class MainActivity extends AppCompatActivity{
 
     private BroadcastReceiver broadcastReceiver;
 
+    GoogleSignInClient mGoogleSignInClient;
+    GoogleSignInAccount account;
+    TextView tv;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +67,10 @@ public class MainActivity extends AppCompatActivity{
         nv = (NavigationView) findViewById(R.id.nv1);
         setupDrawerContent(nv);
         headerView = nv.getHeaderView(0);
-        TextView tv = (TextView) headerView.findViewById(R.id.uiCurrentUser);
+        tv=(TextView) headerView.findViewById(R.id.uiCurrentUser);
+        if(account!=null){
+            tv.setText(account.getGivenName());
+        }
 
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -119,6 +129,7 @@ public class MainActivity extends AppCompatActivity{
 
             case R.id.logout:
                 fragmentClass = Home.class;
+                signOut();
                 break;
 
 
@@ -185,10 +196,20 @@ public class MainActivity extends AppCompatActivity{
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-
+            account=null;
+            account = completedTask.getResult(ApiException.class);
+            if(account!=null){
+                Toast.makeText(this,"met succes ingelogd "+account.getFamilyName(),Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(this,"verkeerde ingelogd "+account.getFamilyName(),Toast.LENGTH_SHORT).show();
+            }
             // Signed in successfully, show authenticated UI.
+            tv=(TextView) headerView.findViewById(R.id.uiCurrentUser);
+            tv.setText(account.getGivenName());
+
         } catch (ApiException e) {
+            Toast.makeText(this,"verkeerde login",Toast.LENGTH_SHORT).show();
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
         }
@@ -198,6 +219,16 @@ public class MainActivity extends AppCompatActivity{
     protected void onDestroy(){
         super.onDestroy();
         this.unregisterReceiver(broadcastReceiver);
+    }
+
+    private void signOut() {
+        mGoogleSignInClient.signOut()
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // ...
+                    }
+                });
     }
 
 
