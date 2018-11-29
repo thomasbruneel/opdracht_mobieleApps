@@ -99,6 +99,8 @@ public class ZoekertjeToevoegen extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.fragment_zoekertje_toevoegen, container, false);
 
+        String userID = getArguments().getString("userID");
+
         Button button=(Button) view.findViewById(R.id.uiToevoegButton);
         button.setOnClickListener(new View.OnClickListener()
         {

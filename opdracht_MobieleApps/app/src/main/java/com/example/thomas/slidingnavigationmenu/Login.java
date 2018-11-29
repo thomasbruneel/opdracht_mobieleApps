@@ -14,9 +14,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -35,6 +38,7 @@ public class Login extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    static final int REQUEST_SIGNIN=3;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -83,46 +87,28 @@ public class Login extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view=inflater.inflate(R.layout.fragment_login, container, false);
-        Button button=(Button) view.findViewById(R.id.uiLoginButton);
+        SignInButton button=(SignInButton) view.findViewById(R.id.sign_in_button);
+
+        GoogleSignInOptions gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        mGoogleSignInClient=GoogleSignIn.getClient(getActivity(),gso);
+
         button.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                EditText etGebruikersNaam=(EditText)view.findViewById(R.id.uiGebruikersnaam);
-                String gebruikersNaam=etGebruikersNaam.getText().toString();
-                EditText etWachtwoord=(EditText)view.findViewById(R.id.uiWachtwoord);
-                String wachtwoord=etWachtwoord.getText().toString();
-
-                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestEmail()
-                        .build();
-
-                // Build a GoogleSignInClient with the options specified by gso.
-                 mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
-                 signIn();              //STARTEN NIEUWE ACTIVITY
-
-
-
-
+                Intent signInIntent=mGoogleSignInClient.getSignInIntent();
+                getActivity().startActivityForResult(signInIntent,REQUEST_SIGNIN);
 
             }
         });
 
-        TextView textView=(TextView) view.findViewById(R.id.uiRegistratieLink);
-        textView.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent=new Intent(getActivity(),Registratie.class);
-                startActivity(intent);
 
-            }
-        });
 
         return view;
     }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -140,13 +126,6 @@ public class Login extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        int RC_SIGN_IN = 12500;
-        getActivity().startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
 
