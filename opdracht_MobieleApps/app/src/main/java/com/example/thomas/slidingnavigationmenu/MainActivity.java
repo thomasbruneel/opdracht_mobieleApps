@@ -129,8 +129,15 @@ public class MainActivity extends AppCompatActivity{
                 break;
 
             case R.id.zoekertjeToevoegen:
-                fragmentClass = ZoekertjeToevoegen.class;
-                bundle.putString("userID", userId); //userId meegeven om zoekertje te kunnen toevoegen
+                if(userId!=null){
+                    fragmentClass = ZoekertjeToevoegen.class;
+                    bundle.putString("userID", userId); //userId meegeven om zoekertje te kunnen toevoegen
+                }
+                else{
+                    fragmentClass = Login.class;
+                    Toast.makeText(getApplicationContext(),"gelieve eerst in te loggen",Toast.LENGTH_SHORT).show();
+                }
+
                 break;
 
             case R.id.logout:
@@ -215,6 +222,7 @@ public class MainActivity extends AppCompatActivity{
             GoogleSignInAccount account=completedTask.getResult(ApiException.class);
             tv.setText(account.getEmail());
             userId=account.getId();
+            Toast.makeText(this,"Welkom "+account.getDisplayName(),Toast.LENGTH_SHORT).show();
         } catch (ApiException e) {
             e.printStackTrace();
             Toast.makeText(this,"wrong login combination",Toast.LENGTH_SHORT).show();
