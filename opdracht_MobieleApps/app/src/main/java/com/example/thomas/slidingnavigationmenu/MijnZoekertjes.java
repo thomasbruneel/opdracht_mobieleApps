@@ -109,20 +109,47 @@ public class MijnZoekertjes extends Fragment {
             }
         });
 
-        EditText et = (EditText) view.findViewById(R.id.zoekveld);
+        EditText et=(EditText)view.findViewById(R.id.zoekveld);
+
         et.addTextChangedListener(new TextWatcher() {
-            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
 
-            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                List<ZoekertjeDB>zoekertjes=new ArrayList<ZoekertjeDB>();
+                AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, "appdatabase.db")
+                        .allowMainThreadQueries()   //Allows room to do operation on main thread
+                        .build();
+                String currentDBPath=getContext().getDatabasePath("appdatabase").getAbsolutePath();
+
+                ContactDAO contactDAO = database.getContactDAO();
+                zoekertjes= contactDAO.getZoekertjes();
+
+                List<ZoekertjeDB> filteredList=new ArrayList<>();
+                String search=s.toString().toLowerCase();
+                if(s.length()!=0){
+                    for (ZoekertjeDB zoekertje: zoekertjes) {
+                        if(zoekertje.getTitel().toLowerCase().contains(search)){
+                            System.out.println("true "+zoekertje.getTitel());
+                            filteredList.add(zoekertje);
+                        }
+                    }
+                }else{
+                    filteredList.addAll(zoekertjes) ;
+                }
+
+                adapter.notifyDataSetChanged(filteredList);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
 
             }
 
-            public void afterTextChanged(Editable arg0) {
-                adapter.getFilter().filter(arg0);
-
-            }
         });
 
         return view;

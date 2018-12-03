@@ -25,6 +25,9 @@ public class Email extends AppCompatActivity {
         final EditText subject=(EditText) findViewById(R.id.editText2);
         final EditText message=(EditText) findViewById(R.id.editText3);
 
+        android.support.v7.app.ActionBar actionBar=getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         subject.setText("Second Chance: "+sub);
 
         buttonSend.setOnClickListener(new View.OnClickListener() {
