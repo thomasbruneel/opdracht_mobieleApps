@@ -49,6 +49,11 @@ public class ZoekertjeViewPublic extends AppCompatActivity {
                 intent.putExtra("subject", z.getBeschrijving());
                 startActivity(intent);
                 break;
+
+            case R.id.action_location:
+                Intent intent2=new Intent(this,MapsActivity.class);
+                startActivity(intent2);
+                break;
             default:
                 finish();
                 return super.onOptionsItemSelected(item);

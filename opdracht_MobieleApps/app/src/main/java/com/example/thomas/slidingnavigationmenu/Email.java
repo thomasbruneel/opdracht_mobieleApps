@@ -1,13 +1,18 @@
 package com.example.thomas.slidingnavigationmenu;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.thomas.slidingnavigationmenu.Room.AppDatabase;
+import com.example.thomas.slidingnavigationmenu.Room.ContactDAO;
 import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
 
 public class Email extends AppCompatActivity {
@@ -49,4 +54,10 @@ public class Email extends AppCompatActivity {
 
 
     }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        finish();
+        return true;
+    }
+
 }
