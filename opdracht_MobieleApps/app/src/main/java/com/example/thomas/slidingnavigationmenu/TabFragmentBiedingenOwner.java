@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.thomas.slidingnavigationmenu.BiedingListAdapter;
+import com.example.thomas.slidingnavigationmenu.R;
 import com.example.thomas.slidingnavigationmenu.Room.AppDatabase;
 import com.example.thomas.slidingnavigationmenu.Room.BiedingDB;
 import com.example.thomas.slidingnavigationmenu.Room.ContactDAO;
@@ -19,14 +21,14 @@ import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TabFragment2 extends Fragment {
+public class TabFragmentBiedingenOwner extends Fragment {
     ZoekertjeDB z;
     private BiedingListAdapter adapter;
     ListView mijnListView;
     List<BiedingDB> biedingen=new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view=inflater.inflate(R.layout.fragment_tab_fragment2, container, false);
+        final View view=inflater.inflate(R.layout.fragment_tab_fragment_biedingen_owner, container, false);
         Intent i = getActivity().getIntent();
         z = (ZoekertjeDB) i.getSerializableExtra("mijnZoekertje");
         //biedingen
@@ -39,22 +41,6 @@ public class TabFragment2 extends Fragment {
         mijnListView=(ListView) view.findViewById(R.id.biedingListView);
         mijnListView.setAdapter(adapter);
 
-        Button button=(Button) view.findViewById(R.id.voegBiedingToeButton);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, "appdatabase.db")
-                        .allowMainThreadQueries()   //Allows room to do operation on main thread
-                        .build();
-                ContactDAO contactDAO = database.getContactDAO();
-                EditText et=(EditText) view.findViewById(R.id.bieding);
-                BiedingDB bieding=new BiedingDB();
-                bieding.setBiedingprijs(Double.parseDouble(et.getText().toString()));
-                bieding.setZoekertjeid(z.getZoekertjeid());
-                contactDAO.insert(bieding);
-                adapter.notifyDataSetChanged(bieding);
-            }
-        });
         return view;
     }
 

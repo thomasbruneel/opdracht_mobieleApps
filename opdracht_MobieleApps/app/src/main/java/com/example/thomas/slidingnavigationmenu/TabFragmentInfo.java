@@ -18,7 +18,7 @@ import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TabFragment1 extends Fragment {
+public class TabFragmentInfo extends Fragment {
     ZoekertjeDB z;
     private BiedingListAdapter adapter;
     ListView mijnListView;
@@ -26,7 +26,7 @@ public class TabFragment1 extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view=inflater.inflate(R.layout.fragment_tab_fragment1, container, false);
+        final View view=inflater.inflate(R.layout.fragment_tab_fragment_info, container, false);
 
         Intent i = getActivity().getIntent();
         z = (ZoekertjeDB) i.getSerializableExtra("mijnZoekertje");

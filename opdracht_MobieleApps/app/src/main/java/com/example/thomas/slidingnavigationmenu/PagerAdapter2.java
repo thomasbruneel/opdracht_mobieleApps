@@ -4,10 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-public class PagerAdapter extends FragmentStatePagerAdapter {
+public class PagerAdapter2 extends FragmentStatePagerAdapter {
     int mNumOfTabs;
 
-    public PagerAdapter(FragmentManager fm, int NumOfTabs) {
+    public PagerAdapter2(FragmentManager fm, int NumOfTabs) {
         super(fm);
         this.mNumOfTabs = NumOfTabs;
     }
@@ -20,7 +20,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 TabFragmentInfo tab1 = new TabFragmentInfo();
                 return tab1;
             case 1:
-                TabFragmentBiedingenPublic tab2 = new TabFragmentBiedingenPublic();
+                TabFragmentBiedingenOwner tab2 = new TabFragmentBiedingenOwner();
                 return tab2;
 
             default:

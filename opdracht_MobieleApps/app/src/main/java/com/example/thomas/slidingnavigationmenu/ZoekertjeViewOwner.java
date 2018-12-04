@@ -4,6 +4,8 @@ import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -45,22 +47,32 @@ public class ZoekertjeViewOwner extends AppCompatActivity {
 
         actionBar.setTitle(z.getTitel()+"  ( € "+z.getPrijs()+")");
 
-        TextView tv=(TextView) findViewById(R.id.uiBeschrijving);
-        tv.setText(z.getBeschrijving());
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText("info zoekertje"));
+        tabLayout.addTab(tabLayout.newTab().setText("biedingen"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        ImageView iv=(ImageView) findViewById(R.id.afbeelding);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(z.getFoto(), 0, z.getFoto().length);
-        iv.setImageBitmap(bitmap);
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        final PagerAdapter2 adapter = new PagerAdapter2
+                (getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
 
-        //biedingen
-        AppDatabase database = Room.databaseBuilder(this, AppDatabase.class, "appdatabase.db")
-                .allowMainThreadQueries()   //Allows room to do operation on main thread
-                .build();
-        ContactDAO contactDAO = database.getContactDAO();
-        biedingen=contactDAO.findRepositoriesForBieding(z.getZoekertjeid());
-        adapter=new BiedingListAdapter(this,R.layout.customlayout2,biedingen);
-        mijnListView=(ListView) findViewById(R.id.biedingListView);
-        mijnListView.setAdapter(adapter);
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
 
     }
