@@ -58,4 +58,14 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
         public void setZoekertjeid(int zoekertjeid) {
             this.zoekertjeid = zoekertjeid;
         }
+
+    @Override
+    public String toString() {
+        return "BiedingDB{" +
+                "biedingid=" + biedingid +
+                ", naambieder='" + naambieder + '\'' +
+                ", biedingprijs=" + biedingprijs +
+                ", zoekertjeid=" + zoekertjeid +
+                '}';
+    }
 }
