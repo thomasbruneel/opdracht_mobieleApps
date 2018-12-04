@@ -51,14 +51,13 @@ public class BiedingListAdapter extends ArrayAdapter<BiedingDB> {
         convertView=inflater.inflate(mResource,parent,false);
 
         TextView tvPrice=(TextView)convertView.findViewById(R.id.uiListPrice);
-        tvPrice.setText(price);
+        tvPrice.setText(" prijs: "+price+ "€");
 
         return convertView;
 
     }
 
     public void notifyDataSetChanged(BiedingDB bieding) {
-        System.out.println("biedinggggggg!!!!!!!!!!!!!!!!!!!!!");
         this.add(bieding);
     }
 }

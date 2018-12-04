@@ -31,7 +31,7 @@ public class ZoekertjeViewPublic extends AppCompatActivity {
     ZoekertjeDB z;
     private BiedingListAdapter adapter;
     ListView mijnListView;
-    List<BiedingDB> biedingen=new ArrayList<>();;
+    List<BiedingDB> biedingen=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
