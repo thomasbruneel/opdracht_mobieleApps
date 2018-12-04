@@ -1,27 +1,16 @@
 package com.example.thomas.slidingnavigationmenu;
 
-import android.arch.persistence.room.Room;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.thomas.slidingnavigationmenu.Room.AppDatabase;
 import com.example.thomas.slidingnavigationmenu.Room.BiedingDB;
-import com.example.thomas.slidingnavigationmenu.Room.ContactDAO;
 import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
 
 import java.util.ArrayList;
@@ -47,37 +36,30 @@ public class ZoekertjeViewPublic extends AppCompatActivity {
 
         actionBar.setTitle(z.getTitel()+"  ( € "+z.getPrijs()+")");
 
-        TextView tv=(TextView) findViewById(R.id.uiBeschrijving);
-        tv.setText(z.getBeschrijving());
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText("info zoekertje"));
+        tabLayout.addTab(tabLayout.newTab().setText("biedingen"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        ImageView iv=(ImageView) findViewById(R.id.afbeelding);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(z.getFoto(), 0, z.getFoto().length);
-        iv.setImageBitmap(bitmap);
-
-        //biedingen
-        AppDatabase database = Room.databaseBuilder(this, AppDatabase.class, "appdatabase.db")
-                .allowMainThreadQueries()   //Allows room to do operation on main thread
-                .build();
-        ContactDAO contactDAO = database.getContactDAO();
-        biedingen=contactDAO.findRepositoriesForBieding(z.getZoekertjeid());
-        adapter=new BiedingListAdapter(this,R.layout.customlayout2,biedingen);
-        mijnListView=(ListView) findViewById(R.id.biedingListView);
-        mijnListView.setAdapter(adapter);
-
-        Button button=(Button) findViewById(R.id.voegBiedingToeButton);
-        button.setOnClickListener(new View.OnClickListener() {
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        final PagerAdapter adapter = new PagerAdapter
+                (getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View v) {
-                AppDatabase database = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "appdatabase.db")
-                        .allowMainThreadQueries()   //Allows room to do operation on main thread
-                        .build();
-                ContactDAO contactDAO = database.getContactDAO();
-                EditText et=(EditText) findViewById(R.id.bieding);
-                BiedingDB bieding=new BiedingDB();
-                bieding.setBiedingprijs(Double.parseDouble(et.getText().toString()));
-                bieding.setZoekertjeid(z.getZoekertjeid());
-                contactDAO.insert(bieding);
-                adapter.notifyDataSetChanged(bieding);
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
     }
