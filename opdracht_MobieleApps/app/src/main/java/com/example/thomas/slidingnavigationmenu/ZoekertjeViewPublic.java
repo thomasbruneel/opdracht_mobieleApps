@@ -39,10 +39,11 @@ public class ZoekertjeViewPublic extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("info zoekertje"));
         tabLayout.addTab(tabLayout.newTab().setText("biedingen"));
+        tabLayout.addTab(tabLayout.newTab().setText("info eigenaar"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        final PagerAdapter adapter = new PagerAdapter
+        final PagerAdapterPublic adapter = new PagerAdapterPublic
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
