@@ -46,12 +46,19 @@ public class BiedingListAdapter extends ArrayAdapter<BiedingDB> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         double prijs=getItem(position).getBiedingprijs();
         String price=String.valueOf(prijs);
+        String time=getItem(position).getTime();
 
         LayoutInflater inflater=LayoutInflater.from(mContext);
         convertView=inflater.inflate(mResource,parent,false);
 
         TextView tvPrice=(TextView)convertView.findViewById(R.id.uiListPrice);
-        tvPrice.setText(" prijs: "+price+ "€");
+        tvPrice.setText(" bod: "+price+ "€");
+
+        TextView tvTime=(TextView) convertView.findViewById(R.id.uiListTime);
+        tvTime.setText(time);
+
+        TextView tvBieder=(TextView) convertView.findViewById(R.id.uiListBieder);
+        tvBieder.setText("bieder...");
 
         return convertView;
 

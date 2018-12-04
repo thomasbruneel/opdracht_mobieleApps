@@ -21,6 +21,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 
         private String naambieder;
         private double biedingprijs;
+        private String time;
         private int zoekertjeid;
 
         public BiedingDB(){
@@ -58,6 +59,10 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
         public void setZoekertjeid(int zoekertjeid) {
             this.zoekertjeid = zoekertjeid;
         }
+
+        public String getTime() {return time;}
+
+        public void setTime(String time) {this.time = time;}
 
     @Override
     public String toString() {

@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import com.example.thomas.slidingnavigationmenu.Room.AppDatabase;
 import com.example.thomas.slidingnavigationmenu.Room.BiedingDB;
 import com.example.thomas.slidingnavigationmenu.Room.ContactDAO;
@@ -18,6 +21,7 @@ import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class TabFragmentBiedingenPublic extends Fragment {
     ZoekertjeDB z;
@@ -50,6 +54,10 @@ public class TabFragmentBiedingenPublic extends Fragment {
                 EditText et=(EditText) view.findViewById(R.id.bieding);
                 BiedingDB bieding=new BiedingDB();
                 bieding.setBiedingprijs(Double.parseDouble(et.getText().toString()));
+                Calendar cal = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                String output = df.format(cal.getTime());
+                bieding.setTime(output);
                 bieding.setZoekertjeid(z.getZoekertjeid());
                 contactDAO.insert(bieding);
                 adapter.notifyDataSetChanged(bieding);
