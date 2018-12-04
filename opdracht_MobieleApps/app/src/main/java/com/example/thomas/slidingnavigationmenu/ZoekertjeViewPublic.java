@@ -25,12 +25,13 @@ import com.example.thomas.slidingnavigationmenu.Room.ContactDAO;
 import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ZoekertjeViewPublic extends AppCompatActivity {
     ZoekertjeDB z;
     private BiedingListAdapter adapter;
     ListView mijnListView;
-    ArrayList<BiedingDB> biedingen=new ArrayList<>();;
+    List<BiedingDB> biedingen=new ArrayList<>();;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +55,11 @@ public class ZoekertjeViewPublic extends AppCompatActivity {
         iv.setImageBitmap(bitmap);
 
         //biedingen
-        BiedingDB bieding=new BiedingDB();
-        bieding.setBiedingprijs(10);
-        biedingen.add(bieding);
+        AppDatabase database = Room.databaseBuilder(this, AppDatabase.class, "appdatabase.db")
+                .allowMainThreadQueries()   //Allows room to do operation on main thread
+                .build();
+        ContactDAO contactDAO = database.getContactDAO();
+        biedingen=contactDAO.findRepositoriesForBieding(z.getZoekertjeid());
         adapter=new BiedingListAdapter(this,R.layout.customlayout2,biedingen);
         mijnListView=(ListView) findViewById(R.id.biedingListView);
         mijnListView.setAdapter(adapter);
@@ -65,9 +68,15 @@ public class ZoekertjeViewPublic extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AppDatabase database = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "appdatabase.db")
+                        .allowMainThreadQueries()   //Allows room to do operation on main thread
+                        .build();
+                ContactDAO contactDAO = database.getContactDAO();
                 EditText et=(EditText) findViewById(R.id.bieding);
                 BiedingDB bieding=new BiedingDB();
                 bieding.setBiedingprijs(Double.parseDouble(et.getText().toString()));
+                bieding.setZoekertjeid(z.getZoekertjeid());
+                contactDAO.insert(bieding);
                 adapter.notifyDataSetChanged(bieding);
             }
         });

@@ -52,12 +52,6 @@ public interface ContactDAO {
     @Delete
     public void delete(UserDB user);
 
-    @Query("SELECT * FROM Bieding WHERE biedingid = :id")
-    public BiedingDB getBiedingen(int id);
-
-
-    @Query("SELECT * FROM Bieding WHERE zoekertjeid=:zoekertjeid")
-    List<BiedingDB> findRepositoriesForBieding(int zoekertjeid);
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //BIEDINGTABLE BIEDINGTABLE BIEDINGTABLE BIEDINGTABLE BIEDINGTABLE BIEDINGTABLE BIEDINGTABLE
@@ -71,4 +65,11 @@ public interface ContactDAO {
 
     @Delete
     public void delete(BiedingDB biedingDB);
+
+    @Query("SELECT * FROM Bieding WHERE biedingid = :id")
+    public BiedingDB getBiedingen(int id);
+
+
+    @Query("SELECT * FROM Bieding WHERE zoekertjeid=:zoekertjeid")
+    List<BiedingDB> findRepositoriesForBieding(int zoekertjeid);
 }
