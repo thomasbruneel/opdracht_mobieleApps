@@ -1,6 +1,7 @@
 package com.example.thomas.slidingnavigationmenu;
 
 
+import android.arch.persistence.room.Room;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -25,6 +26,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.thomas.slidingnavigationmenu.Room.AppDatabase;
+import com.example.thomas.slidingnavigationmenu.Room.ContactDAO;
+import com.example.thomas.slidingnavigationmenu.Room.UserDB;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -220,13 +224,33 @@ public class MainActivity extends AppCompatActivity{
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account=completedTask.getResult(ApiException.class);
-            tv.setText(account.getEmail());
-            userId=account.getId();
+            String email = account.getEmail();
+            String id = account.getId();
+
+            tv.setText(email);
+            userId = id;
+
+            AppDatabase database = Room.databaseBuilder(this, AppDatabase.class, "appdatabase.db")
+                    .allowMainThreadQueries()   //Allows room to do operation on main thread
+                    .build();
+            ContactDAO contactDAO = database.getContactDAO();
+
+            UserDB userDB = new UserDB();
+            userDB.setUserid(id);
+            userDB.setEmail(email);
+
+
+            contactDAO.insert(userDB);
+
             Toast.makeText(this,"Welkom "+account.getDisplayName(),Toast.LENGTH_SHORT).show();
         } catch (ApiException e) {
             e.printStackTrace();
             Toast.makeText(this,"wrong login combination",Toast.LENGTH_SHORT).show();
         }
+
+
+
+
 
     }
 

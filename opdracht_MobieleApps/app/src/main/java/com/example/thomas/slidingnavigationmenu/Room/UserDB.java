@@ -9,7 +9,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 public class UserDB {
 
     @NonNull
-    private int userid;
+    private String userid;
 
     private String email;
 
@@ -19,11 +19,11 @@ public class UserDB {
     }
 
     @NonNull
-    public int getUserid() {
+    public String getUserid() {
         return userid;
     }
 
-    public void setUserid(@NonNull int userid) {
+    public void setUserid(@NonNull String userid) {
         this.userid = userid;
     }
 
