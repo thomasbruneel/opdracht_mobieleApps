@@ -14,6 +14,8 @@ public class UserDB {
 
     private String email;
 
+    private String gemeente;
+
 
     public UserDB(){
 
@@ -36,6 +38,11 @@ public class UserDB {
         this.email = name;
     }
 
+    public String getGemeente() {
+        return gemeente;
+    }
 
-
+    public void setGemeente(String gemeente) {
+        this.gemeente = gemeente;
+    }
 }

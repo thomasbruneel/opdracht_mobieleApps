@@ -238,8 +238,8 @@ public class MainActivity extends AppCompatActivity{
             UserDB userDB = new UserDB();
             userDB.setUserid(id);
             userDB.setEmail(email);
-
-
+            userDB.setGemeente("\\");                   //als null zetten
+            
             contactDAO.insert(userDB);
 
             Toast.makeText(this,"Welkom "+account.getDisplayName(),Toast.LENGTH_SHORT).show();
