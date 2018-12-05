@@ -9,12 +9,9 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 public class UserDB {
 
     @NonNull
-    @PrimaryKey(autoGenerate = true)
     private int userid;
 
-    private String name;
-
-    //Zoekertjelijst
+    private String email;
 
 
     public UserDB(){
@@ -30,12 +27,12 @@ public class UserDB {
         this.userid = userid;
     }
 
-    public String getName() {
-        return name;
+    public String getEmail() {
+        return email;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmail(String name) {
+        this.email = name;
     }
 
 
