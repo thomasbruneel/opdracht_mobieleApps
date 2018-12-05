@@ -9,6 +9,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 public class UserDB {
 
     @NonNull
+    @PrimaryKey
     private String userid;
 
     private String email;
