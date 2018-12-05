@@ -99,7 +99,7 @@ public class ZoekertjeToevoegen extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.fragment_zoekertje_toevoegen, container, false);
 
-        String userID = getArguments().getString("userID");
+        final String userID = getArguments().getString("userID");
 
         Button button=(Button) view.findViewById(R.id.uiToevoegButton);
         button.setOnClickListener(new View.OnClickListener()
@@ -131,11 +131,8 @@ public class ZoekertjeToevoegen extends Fragment {
                 zoekertje.setTitel(titel);
                 zoekertje.setBeschrijving(beschrijving);
                 zoekertje.setPrijs(prijs);
-                zoekertje.setUserid(1);
+                zoekertje.setUserid(userID);
                 zoekertje.setFoto(imageInByte);
-                //UserDB user=new UserDB();
-                //user.setName("thomas");
-                //contactDAO.insert(user);
                 contactDAO.insert(zoekertje);
 
                 Toast.makeText(getActivity(),"met succes zoekertje toegevoegd",Toast.LENGTH_SHORT).show();

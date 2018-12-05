@@ -29,7 +29,7 @@ public class ZoekertjeDB implements Serializable {
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
     private byte[] foto;
 
-    private int userid;
+    private String userid;
 
     public ZoekertjeDB() {
     }
@@ -67,11 +67,11 @@ public class ZoekertjeDB implements Serializable {
         this.prijs = prijs;
     }
 
-    public int getUserid() {
+    public String getUserid() {
         return userid;
     }
 
-    public void setUserid(int userid) {
+    public void setUserid(String userid) {
         this.userid = userid;
     }
 
