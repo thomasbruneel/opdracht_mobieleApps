@@ -235,13 +235,14 @@ public class MainActivity extends AppCompatActivity{
                     .build();
             ContactDAO contactDAO = database.getContactDAO();
 
+            //ALS USER NOG NIET BESTAAT, INVOEGEN IN DB
+            if(contactDAO.findUserById(id)!=null){
             UserDB userDB = new UserDB();
             userDB.setUserid(id);
             userDB.setEmail(email);
             userDB.setGemeente("\\");                   //als null zetten
-
             contactDAO.insert(userDB);
-
+            }
             Toast.makeText(this,"Welkom "+account.getDisplayName(),Toast.LENGTH_SHORT).show();
         } catch (ApiException e) {
             e.printStackTrace();
