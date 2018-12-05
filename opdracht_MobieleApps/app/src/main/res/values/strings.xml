@@ -9,4 +9,7 @@
     <string name="terugNaarLogin"><u>Terug naar loginpagina"</u></string>
     <string name="title_activity_maps">Map</string>
 
+
+    <string name="url">http://192.168.1.18:8080</string>
+
 </resources>

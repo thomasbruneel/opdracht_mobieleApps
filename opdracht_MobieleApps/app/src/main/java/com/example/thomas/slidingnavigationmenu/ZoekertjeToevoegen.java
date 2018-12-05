@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
 import com.example.thomas.slidingnavigationmenu.Room.AppDatabase;
 import com.example.thomas.slidingnavigationmenu.Room.ContactDAO;
@@ -33,7 +37,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -119,21 +128,37 @@ public class ZoekertjeToevoegen extends Fragment {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
                 byte[] imageInByte = baos.toByteArray();
+                final String imageString = Base64.encodeToString(imageInByte, Base64.DEFAULT);
 
-                //eventuele errors
-                AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, "appdatabase.db")
-                        .allowMainThreadQueries()   //Allows room to do operation on main thread
-                        .build();
-                String currentDBPath=getContext().getDatabasePath("appdatabase").getAbsolutePath();
-                System.out.println("pad database "+currentDBPath);
-                ContactDAO contactDAO = database.getContactDAO();
-                ZoekertjeDB zoekertje=new ZoekertjeDB();
-                zoekertje.setTitel(titel);
-                zoekertje.setBeschrijving(beschrijving);
-                zoekertje.setPrijs(prijs);
-                zoekertje.setUserid(userID);
-                zoekertje.setFoto(imageInByte);
-                contactDAO.insert(zoekertje);
+                Map<String, String> gegevens = new HashMap<>();
+                gegevens.put("titel", titel);
+                gegevens.put("beschrijving", beschrijving);
+                gegevens.put("prijs", String.valueOf(prijs));
+                gegevens.put("image",imageString);
+                gegevens.put("userid",userID);
+                final JSONObject jsonObject = new JSONObject(gegevens);
+                JSONArray jArray = new JSONArray();
+                jArray.put(jsonObject);
+                System.out.println("aap "+userID);
+
+                JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST,
+                        getString(R.string.url) + "/addZoekertje",
+                        jArray,
+                        new com.android.volley.Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                Log.d("ToevoegenUser", response.toString());
+                            }
+                        },
+
+                        new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("ToevoegenUser", "Error: " + error.toString() + ", " + error.getMessage());
+                            }
+                        }
+                );
+                VolleyClass.getInstance(getActivity().getApplicationContext()).addToRequestQueue(request, "ToevoegenZoekertje");
 
                 Toast.makeText(getActivity(),"met succes zoekertje toegevoegd",Toast.LENGTH_SHORT).show();
 

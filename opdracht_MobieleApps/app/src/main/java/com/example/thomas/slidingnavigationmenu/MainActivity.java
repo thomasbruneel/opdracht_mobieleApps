@@ -26,6 +26,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.thomas.slidingnavigationmenu.Room.AppDatabase;
 import com.example.thomas.slidingnavigationmenu.Room.ContactDAO;
 import com.example.thomas.slidingnavigationmenu.Room.UserDB;
@@ -41,8 +44,13 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity{
     private DrawerLayout mijnDrawer;
@@ -230,19 +238,33 @@ public class MainActivity extends AppCompatActivity{
             tv.setText(email);
             userId = id;
 
-            AppDatabase database = Room.databaseBuilder(this, AppDatabase.class, "appdatabase.db")
-                    .allowMainThreadQueries()   //Allows room to do operation on main thread
-                    .build();
-            ContactDAO contactDAO = database.getContactDAO();
+            Map<String, String> gegevens = new HashMap<>();
+            gegevens.put("email", email);
+            gegevens.put("gemeente", "gent");
+            gegevens.put("idemail",userId);
+            final JSONObject jsonObject = new JSONObject(gegevens);
+            JSONArray jArray = new JSONArray();
+            jArray.put(jsonObject);
 
-            //ALS USER NOG NIET BESTAAT, INVOEGEN IN DB
-            if(contactDAO.findUserById(id)!=null){
-            UserDB userDB = new UserDB();
-            userDB.setUserid(id);
-            userDB.setEmail(email);
-            userDB.setGemeente("\\");                   //als null zetten
-            contactDAO.insert(userDB);
-            }
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST,
+                    getString(R.string.url) + "/addUser",
+                    jArray,
+                    new com.android.volley.Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            Log.d("ToevoegenUser", response.toString());
+                        }
+                    },
+
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("ToevoegenUser", "Error: " + error.toString() + ", " + error.getMessage());
+                        }
+                    }
+            );
+            VolleyClass.getInstance(this.getApplicationContext()).addToRequestQueue(request, "ToevoegenUser");
+
             Toast.makeText(this,"Welkom "+account.getDisplayName(),Toast.LENGTH_SHORT).show();
         } catch (ApiException e) {
             e.printStackTrace();
