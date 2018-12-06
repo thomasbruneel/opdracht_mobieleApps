@@ -38,7 +38,6 @@ import java.util.Map;
 public class TabFragmentBiedingenPublic extends Fragment {
     ZoekertjeDB z;
     private BiedingListAdapter adapter;
-    ListView mijnListView;
     private List<BiedingDB> biedingen;
     Gson gson;
     public static final String MY_PREFS_NAME = "MyPrefsFile";
@@ -129,6 +128,7 @@ public class TabFragmentBiedingenPublic extends Fragment {
                         }
                 );
                 VolleyClass.getInstance(getActivity().getApplicationContext()).addToRequestQueue(request, "addBieding");
+                et.getText().clear();
 
             }
         });

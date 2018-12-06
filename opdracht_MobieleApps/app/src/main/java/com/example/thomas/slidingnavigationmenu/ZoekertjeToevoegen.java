@@ -131,6 +131,10 @@ public class ZoekertjeToevoegen extends Fragment {
                 VolleyClass.getInstance(getActivity().getApplicationContext()).addToRequestQueue(request, "ToevoegenZoekertje");
 
                 Toast.makeText(getActivity(),"met succes zoekertje toegevoegd",Toast.LENGTH_SHORT).show();
+                etTitel.getText().clear();
+                etPrijs.getText().clear();
+                etBeschrijving.getText().clear();
+                imageView.setImageDrawable(getResources().getDrawable(R.drawable.noimageavailable));
 
             }
         });

@@ -21,6 +21,7 @@ public class Email extends AppCompatActivity {
 
         Intent i = getIntent();
         String sub = i.getStringExtra("subject");
+        String rec = i.getStringExtra("receiver");
 
         Button buttonSend = (Button) findViewById(R.id.sendButton);
         final EditText receiver=(EditText) findViewById(R.id.editText1);
@@ -31,6 +32,7 @@ public class Email extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         subject.setText("Second Chance: "+sub);
+        receiver.setText(rec);
 
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override

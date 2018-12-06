@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 
@@ -68,6 +69,16 @@ public class TabFragmentBiedingenOwner extends Fragment {
                         ListView lv = (ListView) view.findViewById(R.id.biedingListView);
                         lv.setAdapter(adapter);
                         lv.setTextFilterEnabled(true);
+                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                BiedingDB b = (BiedingDB) (parent.getItemAtPosition(position));
+                                Intent intent = new Intent(view.getContext(), Email.class);
+                                intent.putExtra("subject", z.getBeschrijving());
+                                intent.putExtra("receiver", b.getBiedernaam());
+                                startActivity(intent);
+                            }
+                        });
 
                     }
                 },
