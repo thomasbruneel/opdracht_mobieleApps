@@ -126,7 +126,7 @@ public class ZoekertjeToevoegen extends Fragment {
                 ImageView imageView = (ImageView) view.findViewById(R.id.afbeelding);
                 Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 50, baos);
                 byte[] imageInByte = baos.toByteArray();
                 final String imageString = Base64.encodeToString(imageInByte, Base64.DEFAULT);
 
