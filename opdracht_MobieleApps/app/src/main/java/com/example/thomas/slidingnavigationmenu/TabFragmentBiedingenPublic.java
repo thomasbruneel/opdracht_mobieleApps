@@ -41,7 +41,7 @@ public class TabFragmentBiedingenPublic extends Fragment {
     ZoekertjeDB z;
     private BiedingListAdapter adapter;
     ListView mijnListView;
-    List<BiedingDB> biedingen;
+    private List<BiedingDB> biedingen;
     Gson gson;
     public static final String MY_PREFS_NAME = "MyPrefsFile";
     @Override
@@ -52,6 +52,7 @@ public class TabFragmentBiedingenPublic extends Fragment {
         Intent i = getActivity().getIntent();
         z = (ZoekertjeDB) i.getSerializableExtra("mijnZoekertje");
         biedingen=new ArrayList<BiedingDB>();
+        gson = new Gson(); // deze was ik vergeten !!!!!!!!!!!!!!!!!!!!!!!!!
 
         Map<String, String> gegevens = new HashMap<>();
         gegevens.put("zoekertjeid", String.valueOf(z.getZoekertjeid()));
@@ -86,7 +87,7 @@ public class TabFragmentBiedingenPublic extends Fragment {
                 }
         );
         VolleyClass.getInstance(getActivity().getApplicationContext()).addToRequestQueue(projectRequest, "Inloggen");
-/*
+
         Button button=(Button) view.findViewById(R.id.voegBiedingToeButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +97,7 @@ public class TabFragmentBiedingenPublic extends Fragment {
                 bieding.setBiederprijs(Double.parseDouble(et.getText().toString()));
                 Calendar cal = Calendar.getInstance();
                 SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                String output = df.format(cal.getDatum());
+                String output = df.format(cal.getTime());
                 bieding.setDatum(output);
                 bieding.setZoekertjeid(z.getZoekertjeid());
                 Map<String, String> gegevens = new HashMap<>();
@@ -104,11 +105,11 @@ public class TabFragmentBiedingenPublic extends Fragment {
                 gegevens.put("biedernaam", email);
                 gegevens.put("biederprijs", String.valueOf(bieding.getBiederprijs()));
                 gegevens.put("datum",bieding.getDatum());
-                gegevens.put("zoekertjeid",String.valueOf(bieding.getZoekertjeid()));
+                gegevens.put("zoekertjeid",String.valueOf(z.getZoekertjeid()));
                 final JSONObject jsonObject = new JSONObject(gegevens);
                 JSONArray jArray = new JSONArray();
                 jArray.put(jsonObject);
-
+                System.out.println("EXTRA   :"+z.getTitel()+ "  "+z.getZoekertjeid());
                 adapter = new BiedingListAdapter(getActivity(), R.layout.customlayout2, biedingen);
                 ListView lv = (ListView) view.findViewById(R.id.biedingListView);
                 lv.setAdapter(adapter);
@@ -135,7 +136,7 @@ public class TabFragmentBiedingenPublic extends Fragment {
 
             }
         });
-        */
+
         return view;
     }
 

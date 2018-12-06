@@ -49,7 +49,7 @@ public class BiedingListAdapter extends ArrayAdapter<BiedingDB> {
         tvTime.setText(time);
 
         TextView tvBieder=(TextView) convertView.findViewById(R.id.uiListBieder);
-        tvBieder.setText("bieder...");
+        tvBieder.setText(getItem(position).getBiedernaam());
 
         return convertView;
 
