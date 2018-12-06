@@ -12,9 +12,7 @@ import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.thomas.slidingnavigationmenu.Room.AppDatabase;
 import com.example.thomas.slidingnavigationmenu.Room.BiedingDB;
-import com.example.thomas.slidingnavigationmenu.Room.ContactDAO;
 import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
 
 import java.util.ArrayList;
@@ -73,11 +71,11 @@ public class ZoekertjeViewOwner extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()) {
             case R.id.action_delete:
-                AppDatabase database = Room.databaseBuilder(this, AppDatabase.class, "appdatabase.db")
-                        .allowMainThreadQueries()   //Allows room to do operation on main thread
-                        .build();
-                ContactDAO contactDAO = database.getContactDAO();
-                contactDAO.delete(z);
+                //AppDatabase database = Room.databaseBuilder(this, AppDatabase.class, "appdatabase.db")
+                     //   .allowMainThreadQueries()   //Allows room to do operation on main thread
+                      //  .build();
+                //ContactDAO contactDAO = database.getContactDAO();
+                //contactDAO.delete(z);
                 Toast.makeText(this,"met succes zoekertje verwijdert",Toast.LENGTH_SHORT).show();
                 finish();
                 break;

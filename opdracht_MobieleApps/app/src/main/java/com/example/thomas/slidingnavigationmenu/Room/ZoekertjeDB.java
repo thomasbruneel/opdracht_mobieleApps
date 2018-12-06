@@ -14,24 +14,17 @@ import java.util.List;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "Zoekertje",
-        foreignKeys = @ForeignKey(entity = UserDB.class,
-        parentColumns = "userid",
-        childColumns = "userid",
-        onDelete = CASCADE))
+
 public class ZoekertjeDB implements Serializable {
-    @NonNull
-    @PrimaryKey(autoGenerate = true)
-    @SerializedName("idZoekertje")
+
     private int zoekertjeid;
-    @SerializedName("titel")
+
     private String titel;
-    @SerializedName("beschrijving")
+
     private String beschrijving;
-    @SerializedName("prijs")
+
     private double prijs;
 
-    @SerializedName("image")
     private String image;
 
     private String userid;

@@ -5,10 +5,12 @@ import android.arch.persistence.room.Room;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -29,8 +31,7 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.example.thomas.slidingnavigationmenu.Room.AppDatabase;
-import com.example.thomas.slidingnavigationmenu.Room.ContactDAO;
+
 import com.example.thomas.slidingnavigationmenu.Room.UserDB;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity{
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_IMAGE_GALLERY = 2;
     static final int REQUEST_SIGNIN=3;
+    public static final String MY_PREFS_NAME = "MyPrefsFile";
 
     private BroadcastReceiver broadcastReceiver;
     GoogleSignInClient mGoogleSignInClient;
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity{
     TextView tv;
 
     String userId;
+    String email;
 
 
     @Override
@@ -119,6 +122,15 @@ public class MainActivity extends AppCompatActivity{
         Fragment myFragment = null;
         Class fragmentClass = null;
         Bundle bundle = new Bundle();
+
+        bundle.putString("userID", userId);//userId meegeven om zoekertje te kunnen toevoegen
+        bundle.putString("email", email);//email meegeven om zoekertje te kunnen toevoegen
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("email",email);
+        editor.apply();
+
         switch (menuitem.getItemId()) {
             case R.id.home:
                 fragmentClass = Home.class;
@@ -143,7 +155,6 @@ public class MainActivity extends AppCompatActivity{
             case R.id.zoekertjeToevoegen:
                 if(userId!=null){
                     fragmentClass = ZoekertjeToevoegen.class;
-                    bundle.putString("userID", userId); //userId meegeven om zoekertje te kunnen toevoegen
                 }
                 else{
                     fragmentClass = Login.class;
@@ -163,6 +174,7 @@ public class MainActivity extends AppCompatActivity{
                         });
                 tv.setText("");
                 userId=null;
+                email=null;
                 break;
 
 
@@ -232,7 +244,7 @@ public class MainActivity extends AppCompatActivity{
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account=completedTask.getResult(ApiException.class);
-            String email = account.getEmail();
+            email = account.getEmail();
             String id = account.getId();
 
             tv.setText(email);
@@ -297,6 +309,7 @@ public class MainActivity extends AppCompatActivity{
         if(account!=null){
             tv.setText(account.getEmail());
             userId=account.getId();
+            email=account.getEmail();
         }
 
     }
