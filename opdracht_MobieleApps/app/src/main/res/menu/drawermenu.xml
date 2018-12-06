@@ -9,7 +9,7 @@
 
     <item android:id="@+id/zoekertjeToevoegen" android:title="zoekertje toevoegen" android:icon="@drawable/ic_icon_addzoekertje"/>
 
-    <item android:id="@+id/settings" android:title="Settings" android:icon="@drawable/ic_icon_settings"/>
+    <item android:id="@+id/settings" android:title="Profielgegevens" android:icon="@drawable/ic_icon_settings"/>
 
     <item android:id="@+id/about" android:title="About us" android:icon="@drawable/ic_icon_about"/>
 

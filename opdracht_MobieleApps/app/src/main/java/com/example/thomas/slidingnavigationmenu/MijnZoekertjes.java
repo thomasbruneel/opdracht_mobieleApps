@@ -97,7 +97,6 @@ public class MijnZoekertjes extends Fragment {
                         Log.d("Projecten", "GELUKT!");
                         Type type = new TypeToken<List<ZoekertjeDB>>(){}.getType();
                         zoekertjes = gson.fromJson(response.toString(), type);
-                        System.out.println("aap "+zoekertjes.get(0).getTitel());
                         adapter = new ZoekertjesListAdapter(getActivity(), R.layout.customlayout, zoekertjes);
                         lv.setAdapter(adapter);
                         lv.setTextFilterEnabled(true);
@@ -244,7 +243,6 @@ public class MijnZoekertjes extends Fragment {
                         Log.d("Projecten", "GELUKT!");
                         Type type = new TypeToken<List<ZoekertjeDB>>(){}.getType();
                         zoekertjes = gson.fromJson(response.toString(), type);
-                        System.out.println("aap "+zoekertjes.get(0).getTitel());
                         adapter = new ZoekertjesListAdapter(getActivity(), R.layout.customlayout, zoekertjes);
                         lv.setAdapter(adapter);
                         lv.setTextFilterEnabled(true);

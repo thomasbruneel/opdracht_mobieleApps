@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity{
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("email",email);
+        editor.putString("userID",userId);
         editor.apply();
 
         switch (menuitem.getItemId()) {
@@ -146,7 +147,7 @@ public class MainActivity extends AppCompatActivity{
                 break;
 
             case R.id.settings:
-                fragmentClass = Settings.class;
+                fragmentClass = ProfielGegevens.class;
                 break;
 
             case R.id.zoekertjeToevoegen:
