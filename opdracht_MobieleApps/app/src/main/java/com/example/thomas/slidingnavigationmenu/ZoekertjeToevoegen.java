@@ -28,8 +28,6 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
-import com.example.thomas.slidingnavigationmenu.Room.AppDatabase;
-import com.example.thomas.slidingnavigationmenu.Room.ContactDAO;
 import com.example.thomas.slidingnavigationmenu.Room.UserDB;
 import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -109,6 +107,8 @@ public class ZoekertjeToevoegen extends Fragment {
         view=inflater.inflate(R.layout.fragment_zoekertje_toevoegen, container, false);
 
         final String userID = getArguments().getString("userID");
+        final String email =getArguments().getString("email");
+        System.out.println("mijn email adres is "+email);
 
         Button button=(Button) view.findViewById(R.id.uiToevoegButton);
         button.setOnClickListener(new View.OnClickListener()
@@ -126,7 +126,7 @@ public class ZoekertjeToevoegen extends Fragment {
                 ImageView imageView = (ImageView) view.findViewById(R.id.afbeelding);
                 Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 1, baos);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
                 byte[] imageInByte = baos.toByteArray();
                 final String imageString = Base64.encodeToString(imageInByte, Base64.DEFAULT);
 
@@ -139,7 +139,6 @@ public class ZoekertjeToevoegen extends Fragment {
                 final JSONObject jsonObject = new JSONObject(gegevens);
                 JSONArray jArray = new JSONArray();
                 jArray.put(jsonObject);
-                System.out.println("aap "+userID);
 
                 JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST,
                         getString(R.string.url) + "/addZoekertje",
@@ -147,14 +146,14 @@ public class ZoekertjeToevoegen extends Fragment {
                         new com.android.volley.Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
-                                Log.d("ToevoegenUser", response.toString());
+                                Log.d("ToevoegenZoekertje", response.toString());
                             }
                         },
 
                         new com.android.volley.Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Log.d("ToevoegenUser", "Error: " + error.toString() + ", " + error.getMessage());
+                                Log.d("ToevoegenZoekertje", "Error: " + error.toString() + ", " + error.getMessage());
                             }
                         }
                 );

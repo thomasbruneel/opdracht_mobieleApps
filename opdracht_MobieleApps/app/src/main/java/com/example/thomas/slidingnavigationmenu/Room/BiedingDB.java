@@ -1,55 +1,57 @@
 package com.example.thomas.slidingnavigationmenu.Room;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
+import java.io.Serializable;
 
-import static android.arch.persistence.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "Bieding",
-        foreignKeys = @ForeignKey(entity = ZoekertjeDB.class,
-                parentColumns = "zoekertjeid",
-                childColumns = "zoekertjeid",
-                onDelete = CASCADE))
-    public class BiedingDB {
-        @NonNull
-        @PrimaryKey(autoGenerate = true)
-        private int biedingid;
+public class BiedingDB implements Serializable {
 
-        private String naambieder;
-        private double biedingprijs;
-        private String time;
+
+        private int idBieding;
+
+        private String biedernaam;
+
+        private double biederprijs;
+
+        private String datum;
+
         private int zoekertjeid;
 
         public BiedingDB(){
         }
 
-        @NonNull
-        public int getBiedingid() {
-            return biedingid;
+    public BiedingDB(int idBieding, String biedernaam, double biederprijs, String datum, int zoekertjeid) {
+        this.idBieding = idBieding;
+        this.biedernaam = biedernaam;
+        this.biederprijs = biederprijs;
+        this.datum = datum;
+        this.zoekertjeid = zoekertjeid;
+    }
+
+    @NonNull
+        public int getIdBieding() {
+            return idBieding;
         }
 
-        public void setBiedingid(@NonNull int biedingid) {
-            this.biedingid = biedingid;
+        public void setIdBieding(@NonNull int idBieding) {
+            this.idBieding = idBieding;
         }
 
-        public String getNaambieder() {
-            return naambieder;
+        public String getBiedernaam() {
+            return biedernaam;
         }
 
-        public void setNaambieder(String naambieder) {
-            this.naambieder = naambieder;
+        public void setBiedernaam(String biedernaam) {
+            this.biedernaam = biedernaam;
         }
 
-        public double getBiedingprijs() {
-            return biedingprijs;
+        public double getBiederprijs() {
+            return biederprijs;
         }
 
-        public void setBiedingprijs(double biedingprijs) {
-            this.biedingprijs = biedingprijs;
+        public void setBiederprijs(double biederprijs) {
+            this.biederprijs = biederprijs;
         }
 
         public int getZoekertjeid() {
@@ -60,16 +62,17 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
             this.zoekertjeid = zoekertjeid;
         }
 
-        public String getTime() {return time;}
+        public String getDatum() {return datum;}
 
-        public void setTime(String time) {this.time = time;}
+        public void setDatum(String datum) {this.datum = datum;}
 
     @Override
     public String toString() {
         return "BiedingDB{" +
-                "biedingid=" + biedingid +
-                ", naambieder='" + naambieder + '\'' +
-                ", biedingprijs=" + biedingprijs +
+                "idBieding=" + idBieding +
+                ", biedernaam='" + biedernaam + '\'' +
+                ", biederprijs=" + biederprijs +
+                ", datum='" + datum + '\'' +
                 ", zoekertjeid=" + zoekertjeid +
                 '}';
     }

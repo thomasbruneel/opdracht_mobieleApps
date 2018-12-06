@@ -22,8 +22,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
-import com.example.thomas.slidingnavigationmenu.Room.AppDatabase;
-import com.example.thomas.slidingnavigationmenu.Room.ContactDAO;
 import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -106,11 +104,12 @@ public class MijnZoekertjes extends Fragment {
         ContactDAO contactDAO = database.getContactDAO();
         zoekertjes = contactDAO.getZoekertjes();
         */
+        final String userID = getArguments().getString("userID");
         gson = new Gson();
         ListView lv = (ListView) view.findViewById(R.id.mijnListView);
         zoekertjes=new ArrayList<ZoekertjeDB>();
         Map<String, String> gegevens = new HashMap<>();
-        gegevens.put("userid", "110572442589223966873");
+        gegevens.put("userid", userID);
         final JSONObject jsonObject = new JSONObject(gegevens);
         final JSONArray jArray = new JSONArray();
         jArray.put(jsonObject);
@@ -237,12 +236,12 @@ public class MijnZoekertjes extends Fragment {
     public void onResume(){
         super.onResume();
         System.out.println("refreshen!!!!!!!!!!!!!!!!");
-        AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, "appdatabase.db")
-                .allowMainThreadQueries()   //Allows room to do operation on main thread
-                .build();
-        String currentDBPath=getContext().getDatabasePath("appdatabase").getAbsolutePath();
+       // AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, "appdatabase.db")
+         //       .allowMainThreadQueries()   //Allows room to do operation on main thread
+        //        .build();
+        //String currentDBPath=getContext().getDatabasePath("appdatabase").getAbsolutePath();
 
-        ContactDAO contactDAO = database.getContactDAO();
+        //ContactDAO contactDAO = database.getContactDAO();
         //List<ZoekertjeDB>zoekertjes=contactDAO.getZoekertjes();
         //adapter.notifyDataSetChanged(zoekertjes);
     }

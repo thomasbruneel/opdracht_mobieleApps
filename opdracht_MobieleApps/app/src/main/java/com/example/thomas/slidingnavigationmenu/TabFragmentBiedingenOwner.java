@@ -13,9 +13,8 @@ import android.widget.ListView;
 
 import com.example.thomas.slidingnavigationmenu.BiedingListAdapter;
 import com.example.thomas.slidingnavigationmenu.R;
-import com.example.thomas.slidingnavigationmenu.Room.AppDatabase;
 import com.example.thomas.slidingnavigationmenu.Room.BiedingDB;
-import com.example.thomas.slidingnavigationmenu.Room.ContactDAO;
+
 import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
 
 import java.util.ArrayList;
@@ -32,10 +31,10 @@ public class TabFragmentBiedingenOwner extends Fragment {
         Intent i = getActivity().getIntent();
         z = (ZoekertjeDB) i.getSerializableExtra("mijnZoekertje");
         //biedingen
-        AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, "appdatabase.db")
-                .allowMainThreadQueries()   //Allows room to do operation on main thread
-                .build();
-        ContactDAO contactDAO = database.getContactDAO();
+        //AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, "appdatabase.db")
+              //  .allowMainThreadQueries()   //Allows room to do operation on main thread
+              //  .build();
+        //ContactDAO contactDAO = database.getContactDAO();
         //biedingen=contactDAO.findRepositoriesForBieding(z.getZoekertjeid());
         adapter=new BiedingListAdapter(getActivity(), R.layout.customlayout2,biedingen);
         mijnListView=(ListView) view.findViewById(R.id.biedingListView);
