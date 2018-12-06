@@ -1,6 +1,5 @@
 package com.example.thomas.slidingnavigationmenu;
 
-import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -21,8 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
-import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
+import com.example.thomas.slidingnavigationmenu.Models.ZoekertjeDB;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -35,15 +33,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MijnZoekertjes.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MijnZoekertjes#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MijnZoekertjes extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -65,15 +54,6 @@ public class MijnZoekertjes extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment mijZoekertjes.
-     */
-    // TODO: Rename and change types and number of parameters
     public static MijnZoekertjes newInstance(String param1, String param2) {
         MijnZoekertjes fragment = new MijnZoekertjes();
         Bundle args = new Bundle();
@@ -237,16 +217,6 @@ public class MijnZoekertjes extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
@@ -256,14 +226,6 @@ public class MijnZoekertjes extends Fragment {
     public void onResume(){
         super.onResume();
         System.out.println("refreshen!!!!!!!!!!!!!!!!");
-       // AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, "appdatabase.db")
-         //       .allowMainThreadQueries()   //Allows room to do operation on main thread
-        //        .build();
-        //String currentDBPath=getContext().getDatabasePath("appdatabase").getAbsolutePath();
-
-        //ContactDAO contactDAO = database.getContactDAO();
-        //List<ZoekertjeDB>zoekertjes=contactDAO.getZoekertjes();
-        //adapter.notifyDataSetChanged(zoekertjes);
         final String userID = getArguments().getString("userID");
         gson = new Gson();
         zoekertjes=new ArrayList<ZoekertjeDB>();

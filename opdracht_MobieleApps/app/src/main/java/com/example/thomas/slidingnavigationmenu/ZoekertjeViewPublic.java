@@ -10,8 +10,8 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.ListView;
 
-import com.example.thomas.slidingnavigationmenu.Room.BiedingDB;
-import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
+import com.example.thomas.slidingnavigationmenu.Models.BiedingDB;
+import com.example.thomas.slidingnavigationmenu.Models.ZoekertjeDB;
 
 import java.util.ArrayList;
 import java.util.List;

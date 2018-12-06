@@ -27,7 +27,6 @@ public class MapsActivity extends AppCompatActivity  implements OnMapReadyCallba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         android.support.v7.app.ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -49,7 +48,6 @@ public class MapsActivity extends AppCompatActivity  implements OnMapReadyCallba
         Address address = addresses.get(0);
         double longitude = address.getLongitude();
         double latitude = address.getLatitude();
-        // Add a marker in Sydney and move the camera
         LatLng coordinate = new LatLng(latitude, longitude);
         mMap.addMarker(new MarkerOptions().position(coordinate).title(adres));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(coordinate));

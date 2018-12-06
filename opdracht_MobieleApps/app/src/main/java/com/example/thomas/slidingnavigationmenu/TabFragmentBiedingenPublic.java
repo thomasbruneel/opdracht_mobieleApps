@@ -21,8 +21,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.example.thomas.slidingnavigationmenu.Room.BiedingDB;
-import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
+import com.example.thomas.slidingnavigationmenu.Models.BiedingDB;
+import com.example.thomas.slidingnavigationmenu.Models.ZoekertjeDB;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

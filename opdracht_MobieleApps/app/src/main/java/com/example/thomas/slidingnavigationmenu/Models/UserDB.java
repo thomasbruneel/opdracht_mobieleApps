@@ -1,9 +1,8 @@
-package com.example.thomas.slidingnavigationmenu.Room;
+package com.example.thomas.slidingnavigationmenu.Models;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
-import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 @Entity
 public class UserDB {

@@ -13,8 +13,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.thomas.slidingnavigationmenu.Room.BiedingDB;
-import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
+import com.example.thomas.slidingnavigationmenu.Models.BiedingDB;
+import com.example.thomas.slidingnavigationmenu.Models.ZoekertjeDB;
 
 import java.util.ArrayList;
 import java.util.List;

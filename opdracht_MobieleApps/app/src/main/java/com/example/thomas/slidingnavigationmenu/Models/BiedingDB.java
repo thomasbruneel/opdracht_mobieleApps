@@ -1,4 +1,4 @@
-package com.example.thomas.slidingnavigationmenu.Room;
+package com.example.thomas.slidingnavigationmenu.Models;
 
 
 import java.io.Serializable;

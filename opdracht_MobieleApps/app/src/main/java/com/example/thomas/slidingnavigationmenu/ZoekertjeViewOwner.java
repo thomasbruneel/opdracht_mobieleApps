@@ -1,6 +1,5 @@
 package com.example.thomas.slidingnavigationmenu;
 
-import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -9,28 +8,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.example.thomas.slidingnavigationmenu.Room.BiedingDB;
-import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
+import com.example.thomas.slidingnavigationmenu.Models.ZoekertjeDB;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ZoekertjeViewOwner extends AppCompatActivity {
