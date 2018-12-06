@@ -233,13 +233,13 @@ app.post('/getBiedingenVanZoekertje',function (req,res) {
         database: "mydb"
     });
 
-    let sql = "Select * FROM Bieding";
-    /* let values = [
-         [zoekertjeid]
-     ];
- */
+    let sql = "Select * FROM Bieding WHERE zoekertjeid = ?";
+    let values = [
+        [zoekertjeid]
+    ];
 
-    con.query(sql, function (err, result) {
+
+    con.query(sql, values, function (err, result) {
         if (err) throw err;
         console.log(result);
         res.send(result);
