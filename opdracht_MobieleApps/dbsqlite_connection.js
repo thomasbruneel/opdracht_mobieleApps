@@ -47,8 +47,8 @@ app.post('/addUser', function (req, res) {
 
     console.log("Connected!");
     var sql = "INSERT IGNORE INTO User (idemail,email,gemeente) VALUES ? ";
-   // email = "" + email;
-   // console.log(email);
+    // email = "" + email;
+    // console.log(email);
 
     var values = [
         [idemail,email, gemeente]
@@ -108,7 +108,7 @@ app.post('/addBieding', function (req, res) {
     let datum = json["datum"];
     let zoekertjeid = json["zoekertjeid"];
 
-  //  toevoegBieding(biedernaam,biederprijs,datum,zoekertjeid);
+    //  toevoegBieding(biedernaam,biederprijs,datum,zoekertjeid);
 
     let con = mysql.createConnection({
         host: "localhost",
@@ -123,7 +123,7 @@ app.post('/addBieding', function (req, res) {
     let sql = "INSERT INTO Bieding(biedernaam,biederprijs,datum,zoekertjeid) VALUES ? ";
     let values = [
         [biedernaam,biederprijs,datum,zoekertjeid]
-        ];
+    ];
 
 
     con.query(sql, [values], function (err, result) {
@@ -144,25 +144,25 @@ app.post('/getZoekertjesPersoon',function (req,res) {
     let userid = json["userid"];
 
     let con = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "root",
-            database: "mydb"
-        });
+        host: "localhost",
+        user: "root",
+        password: "root",
+        database: "mydb"
+    });
 
-        let sql = "Select * FROM Zoekertje Where userid = ?";
-        let values = [
-            [userid]
-        ];
+    let sql = "Select * FROM Zoekertje Where userid = ?";
+    let values = [
+        [userid]
+    ];
 
-        con.query(sql, [values], function (err, result) {
-            if (err) throw err;
+    con.query(sql, [values], function (err, result) {
+        if (err) throw err;
 
-            //RESULT QUERY OMZETTEN
-            console.log(result);
-            res.send(result);
+        //RESULT QUERY OMZETTEN
+        console.log(result);
+        res.send(result);
 
-        });
+    });
 
 })
 
@@ -234,10 +234,10 @@ app.post('/getBiedingenVanZoekertje',function (req,res) {
     });
 
     let sql = "Select * FROM Bieding";
-   /* let values = [
-        [zoekertjeid]
-    ];
-*/
+    /* let values = [
+         [zoekertjeid]
+     ];
+ */
 
     con.query(sql, function (err, result) {
         if (err) throw err;
@@ -266,10 +266,10 @@ function toevoeguser(){
         var sql = "INSERT INTO User (idemail,email,gemeente) VALUES ? ";
         email = "" + email;
         console.log(email);
-     /*   email = JSON.stringify(email);
-        idemail = JSON.stringify(idemail);
-        gemeente = JSON.stringify(gemeente);
-       */
+        /*   email = JSON.stringify(email);
+           idemail = JSON.stringify(idemail);
+           gemeente = JSON.stringify(gemeente);
+          */
         var values = [
             [idemail,email, gemeente]
         ];
