@@ -1,25 +1,23 @@
 package com.example.thomas.slidingnavigationmenu.Room;
 
-import android.support.annotation.NonNull;
 
 import java.io.Serializable;
 
 
 public class BiedingDB implements Serializable {
 
+    private int idBieding;
 
-        private int idBieding;
+    private String biedernaam;
 
-        private String biedernaam;
+    private double biederprijs;
 
-        private double biederprijs;
+    private String datum;
 
-        private String datum;
+    private int zoekertjeid;
 
-        private int zoekertjeid;
-
-        public BiedingDB(){
-        }
+    public BiedingDB(){
+    }
 
     public BiedingDB(int idBieding, String biedernaam, double biederprijs, String datum, int zoekertjeid) {
         this.idBieding = idBieding;
@@ -29,42 +27,45 @@ public class BiedingDB implements Serializable {
         this.zoekertjeid = zoekertjeid;
     }
 
-    @NonNull
-        public int getIdBieding() {
-            return idBieding;
-        }
+    public int getIdBieding() {
+        return idBieding;
+    }
 
-        public void setIdBieding(@NonNull int idBieding) {
-            this.idBieding = idBieding;
-        }
+    public void setIdBieding(int idBieding) {
+        this.idBieding = idBieding;
+    }
 
-        public String getBiedernaam() {
-            return biedernaam;
-        }
+    public String getBiedernaam() {
+        return biedernaam;
+    }
 
-        public void setBiedernaam(String biedernaam) {
-            this.biedernaam = biedernaam;
-        }
+    public void setBiedernaam(String biedernaam) {
+        this.biedernaam = biedernaam;
+    }
 
-        public double getBiederprijs() {
-            return biederprijs;
-        }
+    public double getBiederprijs() {
+        return biederprijs;
+    }
 
-        public void setBiederprijs(double biederprijs) {
-            this.biederprijs = biederprijs;
-        }
+    public void setBiederprijs(double biederprijs) {
+        this.biederprijs = biederprijs;
+    }
 
-        public int getZoekertjeid() {
-            return zoekertjeid;
-        }
+    public String getDatum() {
+        return datum;
+    }
 
-        public void setZoekertjeid(int zoekertjeid) {
-            this.zoekertjeid = zoekertjeid;
-        }
+    public void setDatum(String datum) {
+        this.datum = datum;
+    }
 
-        public String getDatum() {return datum;}
+    public int getZoekertjeid() {
+        return zoekertjeid;
+    }
 
-        public void setDatum(String datum) {this.datum = datum;}
+    public void setZoekertjeid(int zoekertjeid) {
+        this.zoekertjeid = zoekertjeid;
+    }
 
     @Override
     public String toString() {
