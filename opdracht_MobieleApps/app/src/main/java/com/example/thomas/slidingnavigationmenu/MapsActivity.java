@@ -1,5 +1,7 @@
 package com.example.thomas.slidingnavigationmenu;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -12,6 +14,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class MapsActivity extends AppCompatActivity  implements OnMapReadyCallback {
 
@@ -29,24 +35,24 @@ public class MapsActivity extends AppCompatActivity  implements OnMapReadyCallba
         mapFragment.getMapAsync(this);
     }
 
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        String adres="gent";
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocationName(adres, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Address address = addresses.get(0);
+        double longitude = address.getLongitude();
+        double latitude = address.getLatitude();
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng coordinate = new LatLng(latitude, longitude);
+        mMap.addMarker(new MarkerOptions().position(coordinate).title(adres));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(coordinate));
     }
 
     public boolean onOptionsItemSelected(MenuItem item){
