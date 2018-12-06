@@ -1,13 +1,10 @@
 package com.example.thomas.slidingnavigationmenu;
 
-import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -121,6 +118,8 @@ public class Home extends Fragment {
                         Log.d("Projecten", "GELUKT!");
                         Type type = new TypeToken<List<ZoekertjeDB>>(){}.getType();
                         zoekertjes = gson.fromJson(response.toString(), type);
+                        System.out.println("prob1  "+response.toString());
+                        System.out.println("prob2  "+zoekertjes.get(0).getIdZoekertje()+ " "+zoekertjes.get(0).getTitel());
                         adapter = new ZoekertjesListAdapter(getActivity(), R.layout.customlayout, zoekertjes);
                         ListView lv = (ListView) view.findViewById(R.id.mijnListView);
                         lv.setAdapter(adapter);

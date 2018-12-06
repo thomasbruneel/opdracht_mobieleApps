@@ -15,18 +15,17 @@
         android:id="@+id/uiListTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="81dp"
-        android:layout_toStartOf="@+id/uiListBieder"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/uiListPrice"
         android:text="TextView" />
 
     <TextView
         android:id="@+id/uiListBieder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="34dp"
+        android:layout_above="@+id/uiListTime"
+        android:layout_marginStart="86dp"
+        android:layout_toEndOf="@+id/uiListPrice"
         android:text="TextView" />
 
 

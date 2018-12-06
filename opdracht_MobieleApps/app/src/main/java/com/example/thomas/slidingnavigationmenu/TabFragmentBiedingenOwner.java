@@ -35,7 +35,7 @@ public class TabFragmentBiedingenOwner extends Fragment {
               //  .allowMainThreadQueries()   //Allows room to do operation on main thread
               //  .build();
         //ContactDAO contactDAO = database.getContactDAO();
-        //biedingen=contactDAO.findRepositoriesForBieding(z.getZoekertjeid());
+        //biedingen=contactDAO.findRepositoriesForBieding(z.getIdZoekertje());
         adapter=new BiedingListAdapter(getActivity(), R.layout.customlayout2,biedingen);
         mijnListView=(ListView) view.findViewById(R.id.biedingListView);
         mijnListView.setAdapter(adapter);

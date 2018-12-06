@@ -1,6 +1,5 @@
 package com.example.thomas.slidingnavigationmenu;
 
-import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -55,7 +53,7 @@ public class TabFragmentBiedingenPublic extends Fragment {
         gson = new Gson(); // deze was ik vergeten !!!!!!!!!!!!!!!!!!!!!!!!!
 
         Map<String, String> gegevens = new HashMap<>();
-        gegevens.put("zoekertjeid", String.valueOf(z.getZoekertjeid()));
+        gegevens.put("zoekertjeid", String.valueOf(z.getIdZoekertje()));
         final JSONObject jsonObject = new JSONObject(gegevens);
         final JSONArray jArray = new JSONArray();
         jArray.put(jsonObject);
@@ -99,17 +97,17 @@ public class TabFragmentBiedingenPublic extends Fragment {
                 SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                 String output = df.format(cal.getTime());
                 bieding.setDatum(output);
-                bieding.setZoekertjeid(z.getZoekertjeid());
+                bieding.setZoekertjeid(z.getIdZoekertje());
                 Map<String, String> gegevens = new HashMap<>();
                 gegevens.put("idBieding", String.valueOf(bieding.getIdBieding()));
                 gegevens.put("biedernaam", email);
                 gegevens.put("biederprijs", String.valueOf(bieding.getBiederprijs()));
                 gegevens.put("datum",bieding.getDatum());
-                gegevens.put("zoekertjeid",String.valueOf(z.getZoekertjeid()));
+                gegevens.put("zoekertjeid",String.valueOf(z.getIdZoekertje()));
                 final JSONObject jsonObject = new JSONObject(gegevens);
                 JSONArray jArray = new JSONArray();
                 jArray.put(jsonObject);
-                System.out.println("EXTRA   :"+z.getTitel()+ "  "+z.getZoekertjeid());
+                System.out.println("EXTRA   :"+z.getTitel()+ "  "+z.getIdZoekertje());
                 adapter = new BiedingListAdapter(getActivity(), R.layout.customlayout2, biedingen);
                 ListView lv = (ListView) view.findViewById(R.id.biedingListView);
                 lv.setAdapter(adapter);

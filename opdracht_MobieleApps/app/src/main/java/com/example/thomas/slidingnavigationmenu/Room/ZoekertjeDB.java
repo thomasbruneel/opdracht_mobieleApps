@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class ZoekertjeDB implements Serializable {
 
-    private int zoekertjeid;
+    private int idZoekertje;
 
     private String titel;
 
@@ -22,12 +22,12 @@ public class ZoekertjeDB implements Serializable {
     }
 
     @NonNull
-    public int getZoekertjeid() {
-        return zoekertjeid;
+    public int getIdZoekertje() {
+        return idZoekertje;
     }
 
-    public void setZoekertjeid(@NonNull int zoekertjeid) {
-        this.zoekertjeid = zoekertjeid;
+    public void setIdZoekertje(@NonNull int idZoekertje) {
+        this.idZoekertje = idZoekertje;
     }
 
     public String getTitel() {
@@ -73,7 +73,7 @@ public class ZoekertjeDB implements Serializable {
     @Override
     public String toString() {
         return "ZoekertjeDB{" +
-                "zoekertjeid=" + zoekertjeid +
+                "idZoekertje=" + idZoekertje +
                 ", titel='" + titel + '\'' +
                 ", beschrijving='" + beschrijving + '\'' +
                 ", prijs=" + prijs +
