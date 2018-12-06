@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,15 +54,13 @@ public class ZoekertjesListAdapter extends ArrayAdapter<ZoekertjeDB> {
 
         tvName.setText("titel: "+titel);
         tvPrice.setText("prijs: €"+price);
-
-        byte[] image=getItem(position).getFoto();
+        String image=getItem(position).getImage();
+        byte[] byteImage= Base64.decode(image,Base64.DEFAULT);
         if(image!=null){
-            Bitmap bmp = BitmapFactory.decodeByteArray(image, 0, image.length);
+            Bitmap bmp = BitmapFactory.decodeByteArray(byteImage, 0, byteImage.length);
             afbeelding.setImageBitmap(bmp);
         }
 
-        //afbeelding.setImageBitmap(Bitmap.createScaledBitmap(bmp, afbeelding.getWidth(),
-               // afbeelding.getHeight(), false));
 
         return convertView;
 

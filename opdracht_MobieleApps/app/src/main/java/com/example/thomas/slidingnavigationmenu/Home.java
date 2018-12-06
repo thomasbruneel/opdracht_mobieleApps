@@ -97,7 +97,7 @@ public class Home extends Fragment {
         String currentDBPath=getContext().getDatabasePath("appdatabase").getAbsolutePath();
 
         ContactDAO contactDAO = database.getContactDAO();
-        zoekertjes= contactDAO.getZoekertjes();
+        //zoekertjes= contactDAO.getZoekertjes();
         ListView lv=(ListView)view.findViewById(R.id.mijnListView);
 
         adapter=new ZoekertjesListAdapter(getActivity(),R.layout.customlayout,zoekertjes);
@@ -205,7 +205,7 @@ public class Home extends Fragment {
         String currentDBPath=getContext().getDatabasePath("appdatabase").getAbsolutePath();
 
         ContactDAO contactDAO = database.getContactDAO();
-        List<ZoekertjeDB>zoekertjes=contactDAO.getZoekertjes();
-        adapter.notifyDataSetChanged(zoekertjes);
+        //List<ZoekertjeDB>zoekertjes=contactDAO.getZoekertjes();
+        //adapter.notifyDataSetChanged(zoekertjes);
     }
 }

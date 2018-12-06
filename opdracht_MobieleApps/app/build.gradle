@@ -45,5 +45,5 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.0'
 }
 
-//noddig voor firebase
-apply plugin: 'com.google.gms.google-services'
+    //noddig voor firebase
+    apply plugin: 'com.google.gms.google-services'

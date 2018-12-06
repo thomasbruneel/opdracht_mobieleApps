@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,9 @@ public class TabFragmentInfo extends Fragment {
         tv.setText(z.getBeschrijving());
 
         ImageView iv=(ImageView) view.findViewById(R.id.afbeelding);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(z.getFoto(), 0, z.getFoto().length);
+        String image=z.getImage();
+        byte[] byteImage= Base64.decode(image,Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(byteImage, 0, byteImage.length);
         iv.setImageBitmap(bitmap);
 
         return view;

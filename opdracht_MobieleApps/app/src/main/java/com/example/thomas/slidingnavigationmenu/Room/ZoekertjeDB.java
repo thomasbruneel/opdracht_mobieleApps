@@ -7,6 +7,8 @@ import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.Relation;
 import android.support.annotation.NonNull;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -20,14 +22,17 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 public class ZoekertjeDB implements Serializable {
     @NonNull
     @PrimaryKey(autoGenerate = true)
+    @SerializedName("idZoekertje")
     private int zoekertjeid;
-
+    @SerializedName("titel")
     private String titel;
+    @SerializedName("beschrijving")
     private String beschrijving;
+    @SerializedName("prijs")
     private double prijs;
 
-    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
-    private byte[] foto;
+    @SerializedName("image")
+    private String image;
 
     private String userid;
 
@@ -75,12 +80,12 @@ public class ZoekertjeDB implements Serializable {
         this.userid = userid;
     }
 
-    public byte[] getFoto() {
-        return foto;
+    public String getImage() {
+        return image;
     }
 
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override

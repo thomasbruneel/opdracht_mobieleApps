@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +17,25 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.thomas.slidingnavigationmenu.Models.Zoekertje;
 import com.example.thomas.slidingnavigationmenu.Room.AppDatabase;
 import com.example.thomas.slidingnavigationmenu.Room.ContactDAO;
 import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -43,8 +56,9 @@ public class MijnZoekertjes extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private ArrayList<Zoekertje>zoekertjes;
+    private List<ZoekertjeDB>zoekertjes;
     private ZoekertjesListAdapter adapter;
+    Gson gson;
 
     private OnFragmentInteractionListener mListener;
 
@@ -85,32 +99,61 @@ public class MijnZoekertjes extends Fragment {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);//voorkomt dat toetsenbord gepopped wordt bij edittext
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        List<ZoekertjeDB> zoekertjes = new ArrayList<ZoekertjeDB>();
+        /*
         AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, "appdatabase.db")
                 .allowMainThreadQueries()   //Allows room to do operation on main thread
                 .build();
-        String currentDBPath = getContext().getDatabasePath("appdatabase").getAbsolutePath();
-
         ContactDAO contactDAO = database.getContactDAO();
-        //TODO: enkel eigen zoekertjes opvragen
         zoekertjes = contactDAO.getZoekertjes();
+        */
+        gson = new Gson();
         ListView lv = (ListView) view.findViewById(R.id.mijnListView);
+        zoekertjes=new ArrayList<ZoekertjeDB>();
+        Map<String, String> gegevens = new HashMap<>();
+        gegevens.put("userid", "110572442589223966873");
+        final JSONObject jsonObject = new JSONObject(gegevens);
+        final JSONArray jArray = new JSONArray();
+        jArray.put(jsonObject);
 
-        adapter = new ZoekertjesListAdapter(getActivity(), R.layout.customlayout, zoekertjes);
-        lv.setAdapter(adapter);
-        lv.setTextFilterEnabled(true);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ZoekertjeDB z = (ZoekertjeDB) (parent.getItemAtPosition(position));
-                Intent intent = new Intent(view.getContext(), ZoekertjeViewOwner.class);
-                intent.putExtra("mijnZoekertje", z);
-                startActivity(intent);
-            }
-        });
+        JsonArrayRequest projectRequest = new JsonArrayRequest(Request.Method.POST,
+                getString(R.string.url) + "/getZoekertjesPersoon",
+                jArray,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("Projecten", "GELUKT!");
+                        Type type = new TypeToken<List<ZoekertjeDB>>(){}.getType();
+                        zoekertjes = gson.fromJson(response.toString(), type);
+                        System.out.println("aap "+zoekertjes.get(0).getTitel());
+                        adapter = new ZoekertjesListAdapter(getActivity(), R.layout.customlayout, zoekertjes);
+                        ListView lv = (ListView) view.findViewById(R.id.mijnListView);
+                        lv.setAdapter(adapter);
+                        lv.setTextFilterEnabled(true);
+                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                ZoekertjeDB z = (ZoekertjeDB) (parent.getItemAtPosition(position));
+                                Intent intent = new Intent(view.getContext(), ZoekertjeViewOwner.class);
+                                intent.putExtra("mijnZoekertje", z);
+                                startActivity(intent);
+                            }
+                        });
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Projecten", "Error: " + error.toString() + ", " + error.getMessage());
+                    }
+                }
+        );
+        VolleyClass.getInstance(getActivity().getApplicationContext()).addToRequestQueue(projectRequest, "Inloggen");
+
+
 
         EditText et=(EditText)view.findViewById(R.id.zoekveld);
-
+/*
         et.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -151,7 +194,7 @@ public class MijnZoekertjes extends Fragment {
             }
 
         });
-
+*/
         return view;
     }
 
@@ -200,8 +243,8 @@ public class MijnZoekertjes extends Fragment {
         String currentDBPath=getContext().getDatabasePath("appdatabase").getAbsolutePath();
 
         ContactDAO contactDAO = database.getContactDAO();
-        List<ZoekertjeDB>zoekertjes=contactDAO.getZoekertjes();
-        adapter.notifyDataSetChanged(zoekertjes);
+        //List<ZoekertjeDB>zoekertjes=contactDAO.getZoekertjes();
+        //adapter.notifyDataSetChanged(zoekertjes);
     }
 }
 
