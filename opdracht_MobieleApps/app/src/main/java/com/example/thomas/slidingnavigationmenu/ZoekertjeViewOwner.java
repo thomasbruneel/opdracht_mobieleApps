@@ -6,23 +6,36 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.thomas.slidingnavigationmenu.Room.BiedingDB;
 import com.example.thomas.slidingnavigationmenu.Room.ZoekertjeDB;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ZoekertjeViewOwner extends AppCompatActivity {
     ZoekertjeDB z;
-    private BiedingListAdapter adapter;
-    ListView mijnListView;
-    List<BiedingDB> biedingen=new ArrayList<>();
+    Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,13 +82,32 @@ public class ZoekertjeViewOwner extends AppCompatActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item){
+        gson = new Gson();
         switch (item.getItemId()) {
             case R.id.action_delete:
-                //AppDatabase database = Room.databaseBuilder(this, AppDatabase.class, "appdatabase.db")
-                     //   .allowMainThreadQueries()   //Allows room to do operation on main thread
-                      //  .build();
-                //ContactDAO contactDAO = database.getContactDAO();
-                //contactDAO.delete(z);
+                Map<String, String> gegevens = new HashMap<>();
+                gegevens.put("idZoekertje", String.valueOf(z.getIdZoekertje()));
+                final JSONObject jsonObject = new JSONObject(gegevens);
+                final JSONArray jArray = new JSONArray();
+                jArray.put(jsonObject);
+                JsonArrayRequest projectRequest = new JsonArrayRequest(Request.Method.POST,
+                        getString(R.string.url) + "/deleteZoekertje",
+                        jArray,
+                        new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+
+
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("Projecten", "Error: " + error.toString() + ", " + error.getMessage());
+                            }
+                        }
+                );
+                VolleyClass.getInstance(this.getApplicationContext()).addToRequestQueue(projectRequest, "deleteZoekertje");
                 Toast.makeText(this,"met succes zoekertje verwijdert",Toast.LENGTH_SHORT).show();
                 finish();
                 break;

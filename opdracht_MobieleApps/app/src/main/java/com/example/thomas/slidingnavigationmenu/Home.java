@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -146,39 +148,66 @@ public class Home extends Fragment {
         VolleyClass.getInstance(getActivity().getApplicationContext()).addToRequestQueue(projectRequest, "Inloggen");
 
         EditText et=(EditText)view.findViewById(R.id.zoekveld);
-/*
+
         et.addTextChangedListener(new TextWatcher() {
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void beforeTextChanged(final CharSequence s, int start, int count, int after) {
 
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                List<ZoekertjeDB>zoekertjes=new ArrayList<ZoekertjeDB>();
-                AppDatabase database = Room.databaseBuilder(getActivity(), AppDatabase.class, "appdatabase.db")
-                        .allowMainThreadQueries()   //Allows room to do operation on main thread
-                        .build();
-                String currentDBPath=getContext().getDatabasePath("appdatabase").getAbsolutePath();
+            public void onTextChanged(final CharSequence s, int start, int before, int count) {
+                JsonArrayRequest projectRequest = new JsonArrayRequest(Request.Method.POST,
+                        getString(R.string.url) + "/getAlleZoekertjes",
+                        jArray,
+                        new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                Log.d("Projecten", "GELUKT!");
+                                Type type = new TypeToken<List<ZoekertjeDB>>(){}.getType();
+                                zoekertjes = gson.fromJson(response.toString(), type);
+                                System.out.println("aap "+zoekertjes.get(0).getTitel());
+                                adapter = new ZoekertjesListAdapter(getActivity(), R.layout.customlayout, zoekertjes);
+                                ListView lv = (ListView) view.findViewById(R.id.mijnListView);
+                                lv.setAdapter(adapter);
+                                lv.setTextFilterEnabled(true);
+                                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        ZoekertjeDB z = (ZoekertjeDB) (parent.getItemAtPosition(position));
+                                        Intent intent = new Intent(view.getContext(), ZoekertjeViewOwner.class);
+                                        intent.putExtra("mijnZoekertje", z);
+                                        startActivity(intent);
+                                    }
+                                });
+                                List<ZoekertjeDB> filteredList=new ArrayList<>();
+                                String search=s.toString().toLowerCase();
+                                if(s.length()!=0){
+                                    for (ZoekertjeDB zoekertje: zoekertjes) {
+                                        if(zoekertje.getTitel().toLowerCase().contains(search)){
+                                            System.out.println("true "+zoekertje.getTitel());
+                                            filteredList.add(zoekertje);
+                                        }
+                                    }
+                                }else{
+                                    filteredList.addAll(zoekertjes) ;
+                                }
 
-                ContactDAO contactDAO = database.getContactDAO();
-                zoekertjes= contactDAO.getZoekertjes();
+                                adapter.notifyDataSetChanged(filteredList);
 
-                List<ZoekertjeDB> filteredList=new ArrayList<>();
-                String search=s.toString().toLowerCase();
-                if(s.length()!=0){
-                    for (ZoekertjeDB zoekertje: zoekertjes) {
-                        if(zoekertje.getTitel().toLowerCase().contains(search)){
-                            System.out.println("true "+zoekertje.getTitel());
-                            filteredList.add(zoekertje);
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("Projecten", "Error: " + error.toString() + ", " + error.getMessage());
+                            }
                         }
-                    }
-                }else{
-                    filteredList.addAll(zoekertjes) ;
-                }
+                );
+                VolleyClass.getInstance(getActivity().getApplicationContext()).addToRequestQueue(projectRequest, "Inloggen");
 
-                adapter.notifyDataSetChanged(filteredList);
+
             }
 
             @Override
@@ -187,7 +216,7 @@ public class Home extends Fragment {
             }
 
         });
-*/
+
         return view;
     }
 
@@ -212,16 +241,6 @@ public class Home extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

@@ -68,8 +68,6 @@ public class TabFragmentBiedingenPublic extends Fragment {
                         Type type = new TypeToken<List<BiedingDB>>(){}.getType();
                         System.out.println("azerty "+response.toString());
                         biedingen = gson.fromJson(response.toString(), type);
-                        //BiedingDB bieding=new BiedingDB();
-                        //bieding.setBiederprijs(15);
                         adapter = new BiedingListAdapter(getActivity(), R.layout.customlayout2, biedingen);
                         ListView lv = (ListView) view.findViewById(R.id.biedingListView);
                         lv.setAdapter(adapter);
@@ -98,6 +96,7 @@ public class TabFragmentBiedingenPublic extends Fragment {
                 String output = df.format(cal.getTime());
                 bieding.setDatum(output);
                 bieding.setZoekertjeid(z.getIdZoekertje());
+                bieding.setBiedernaam(email);
                 Map<String, String> gegevens = new HashMap<>();
                 gegevens.put("idBieding", String.valueOf(bieding.getIdBieding()));
                 gegevens.put("biedernaam", email);
@@ -107,7 +106,6 @@ public class TabFragmentBiedingenPublic extends Fragment {
                 final JSONObject jsonObject = new JSONObject(gegevens);
                 JSONArray jArray = new JSONArray();
                 jArray.put(jsonObject);
-                System.out.println("EXTRA   :"+z.getTitel()+ "  "+z.getIdZoekertje());
                 adapter = new BiedingListAdapter(getActivity(), R.layout.customlayout2, biedingen);
                 ListView lv = (ListView) view.findViewById(R.id.biedingListView);
                 lv.setAdapter(adapter);
