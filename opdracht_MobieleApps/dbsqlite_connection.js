@@ -248,6 +248,71 @@ app.post('/getBiedingenVanZoekertje',function (req,res) {
 
 })
 
+app.post('/getGemeente',function (req,res) {
+    let data = JSON.stringify(req.body);
+    data = data.substring(1,data.length-1);
+    let json = JSON.parse(data);
+    let idemail = json["idemail"];
+
+
+
+    let con = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "root",
+        database: "mydb"
+    });
+
+
+    let sql = "Select gemeente FROM User WHERE idemail = ?";
+    let values = [
+        [idemail]
+    ];
+
+
+    con.query(sql, values, function (err, result) {
+        if (err) throw err;
+        console.log(result);
+        res.send(result);
+
+    });
+
+
+
+})
+
+app.post('/updateGemeente',function (req,res) {
+    let data = JSON.stringify(req.body);
+    data = data.substring(1,data.length-1);
+    let json = JSON.parse(data);
+    let idemail = json["idemail"];
+    let gemeente = json['gemeente']
+
+
+
+    let con = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "root",
+        database: "mydb"
+    });
+
+
+    let sql = "UPDATE User SET gemeente = ? WHERE idemail = ?";
+    let values = [
+        [gemeente,idemail]
+    ];
+
+
+    con.query(sql, values, function (err, result) {
+        if (err) throw err;
+        console.log(result);
+        res.send(result);
+
+    });
+
+})
+
 
 
 
