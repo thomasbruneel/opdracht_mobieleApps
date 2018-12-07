@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
@@ -87,11 +88,42 @@ public class ProfielGegevens extends Fragment {
             public void onClick(View v)
             {
                 String gemeente=et.getText().toString();
+
+                //sturen naar lokale db
                 UserLocal userlocal=new UserLocal();
                 userlocal.setAdres(gemeente);
                 userlocal.setEmail(email);
                 userlocal.setEmailId(idemail);
                 contactDAO.insert(userlocal);
+
+
+                //sturen naar centrale db
+                Map<String, String> gegevens = new HashMap<>();
+                gegevens.put("idemail", idemail);
+                gegevens.put("gemeente", gemeente);
+                final JSONObject jsonObject = new JSONObject(gegevens);
+                JSONArray jArray = new JSONArray();
+                jArray.put(jsonObject);
+
+                JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST,
+                        getString(R.string.url) + "/updateGemeente",
+                        jArray,
+                        new com.android.volley.Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                Log.d("updateGemeente", response.toString());
+                            }
+                        },
+
+                        new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("updateGemeente", "Error: " + error.toString() + ", " + error.getMessage());
+                            }
+                        }
+                );
+                VolleyClass.getInstance(getActivity().getApplicationContext()).addToRequestQueue(request, "updateGemeente");
+
 
 
             }

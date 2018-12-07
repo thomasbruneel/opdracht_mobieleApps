@@ -2,8 +2,10 @@ package com.example.thomas.slidingnavigationmenu;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -77,8 +79,8 @@ public class MijnZoekertjes extends Fragment {
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);//voorkomt dat toetsenbord gepopped wordt bij edittext
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
-
-        final String userID = getArguments().getString("userID");
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        final String userID = preferences.getString("userID", "");
         gson = new Gson();
         lv = (ListView) view.findViewById(R.id.mijnListView);
         zoekertjes=new ArrayList<ZoekertjeDB>();
@@ -225,7 +227,8 @@ public class MijnZoekertjes extends Fragment {
     public void onResume(){
         super.onResume();
         System.out.println("refreshen!!!!!!!!!!!!!!!!");
-        final String userID = getArguments().getString("userID");
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        final String userID = preferences.getString("userID", "");
         gson = new Gson();
         zoekertjes=new ArrayList<ZoekertjeDB>();
         Map<String, String> gegevens = new HashMap<>();

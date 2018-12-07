@@ -118,10 +118,8 @@ public class MainActivity extends AppCompatActivity{
     public void selectItemDrawer(MenuItem menuitem) {
         Fragment myFragment = null;
         Class fragmentClass = null;
-        Bundle bundle = new Bundle();
 
-        bundle.putString("userID", userId);//userId meegeven om zoekertje te kunnen toevoegen
-        bundle.putString("email", email);//email meegeven om zoekertje te kunnen toevoegen
+        Bundle bundle = new Bundle();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();

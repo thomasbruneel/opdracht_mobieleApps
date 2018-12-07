@@ -1,26 +1,42 @@
 package com.example.thomas.slidingnavigationmenu;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.ListView;
 
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.thomas.slidingnavigationmenu.Models.BiedingDB;
 import com.example.thomas.slidingnavigationmenu.Models.ZoekertjeDB;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ZoekertjeViewPublic extends AppCompatActivity {
     ZoekertjeDB z;
     private BiedingListAdapter adapter;
     ListView mijnListView;
     List<BiedingDB> biedingen=new ArrayList<>();
+    Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +91,41 @@ public class ZoekertjeViewPublic extends AppCompatActivity {
                 break;
 
             case R.id.action_location:
-                Intent intent2=new Intent(this,MapsActivity.class);
-                startActivity(intent2);
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                final String idemail = preferences.getString("userID", "");
+
+                gson = new Gson();
+                Map<String, String> gegevens = new HashMap<>();
+                gegevens.put("idemail", idemail);
+                final JSONObject jsonObject = new JSONObject(gegevens);
+                JSONArray jArray = new JSONArray();
+                jArray.put(jsonObject);
+                final Intent intent2=new Intent(this,MapsActivity.class);
+                JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST,
+                        getString(R.string.url) + "/getGemeente",
+                        jArray,
+                        new com.android.volley.Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                Log.d("getGemeente", response.toString());
+                                String myJSONString=response.toString().substring(1,response.toString().length()-1);// [] wegdoen
+                                JsonObject jobj = new Gson().fromJson(myJSONString, JsonObject.class);
+                                String adres = jobj.get("gemeente").toString().substring(1,jobj.get("gemeente").toString().length()-1);
+                                intent2.putExtra("adres",adres);
+                                startActivity(intent2);
+                            }
+                        },
+
+                        new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("getGemeente", "Error: " + error.toString() + ", " + error.getMessage());
+                            }
+                        }
+                );
+                VolleyClass.getInstance(this.getApplicationContext()).addToRequestQueue(request, "getGemeente");
+
+
                 break;
             default:
                 finish();

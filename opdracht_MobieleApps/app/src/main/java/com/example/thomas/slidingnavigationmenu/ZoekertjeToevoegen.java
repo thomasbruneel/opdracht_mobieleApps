@@ -2,11 +2,13 @@ package com.example.thomas.slidingnavigationmenu;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
@@ -77,8 +79,10 @@ public class ZoekertjeToevoegen extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.fragment_zoekertje_toevoegen, container, false);
 
-        final String userID = getArguments().getString("userID");
-        final String email =getArguments().getString("email");
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        final String userID = preferences.getString("userID", "");
+        final String email =preferences.getString("email", "");
         System.out.println("mijn email adres is "+email);
 
         Button button=(Button) view.findViewById(R.id.uiToevoegButton);

@@ -22,11 +22,13 @@ import java.util.Locale;
 public class MapsActivity extends AppCompatActivity  implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    String adres;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        adres = getIntent().getStringExtra("adres");
         android.support.v7.app.ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -37,7 +39,6 @@ public class MapsActivity extends AppCompatActivity  implements OnMapReadyCallba
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        String adres="gent";
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         List<Address> addresses = null;
         try {
