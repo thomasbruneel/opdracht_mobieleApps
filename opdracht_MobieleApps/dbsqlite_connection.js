@@ -108,7 +108,6 @@ app.post('/addBieding', function (req, res) {
     let datum = json["datum"];
     let zoekertjeid = json["zoekertjeid"];
 
-    //  toevoegBieding(biedernaam,biederprijs,datum,zoekertjeid);
 
     let con = mysql.createConnection({
         host: "localhost",
@@ -300,12 +299,43 @@ app.post('/updateGemeente',function (req,res) {
 
     let sql = "UPDATE User SET gemeente = ? WHERE idemail = ?";
     let values = [
-        [gemeente,idemail]
+        [gemeente],
+        [idemail]
     ];
 
 
     con.query(sql, values, function (err, result) {
         if (err) throw err;
+        console.log(result);
+        res.send(result);
+
+    });
+
+})
+
+
+app.post('/getUserByIdEmail',function (req,res) {
+    let data = JSON.stringify(req.body);
+    data = data.substring(1,data.length-1);
+    let json = JSON.parse(data);
+    let userid = json["userid"];
+
+    let con = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "root",
+        database: "mydb"
+    });
+
+    let sql = "Select * FROM User Where idemail = ?";
+    let values = [
+        [userid]
+    ];
+
+    con.query(sql, [values], function (err, result) {
+        if (err) throw err;
+
+        //RESULT QUERY OMZETTEN
         console.log(result);
         res.send(result);
 
