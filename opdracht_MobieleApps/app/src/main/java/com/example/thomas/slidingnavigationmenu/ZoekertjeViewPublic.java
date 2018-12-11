@@ -2,6 +2,7 @@ package com.example.thomas.slidingnavigationmenu;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
@@ -53,6 +54,11 @@ public class ZoekertjeViewPublic extends AppCompatActivity {
         actionBar.setTitle(z.getTitel()+"  ( € "+z.getPrijs()+")");
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+
+        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FF0000"));
+        tabLayout.setSelectedTabIndicatorHeight((int) (5 * getResources().getDisplayMetrics().density));
+        tabLayout.setTabTextColors(Color.parseColor("#ccc9c9"), Color.parseColor("#ffffff"));
+
         tabLayout.addTab(tabLayout.newTab().setText("info zoekertje"));
         tabLayout.addTab(tabLayout.newTab().setText("biedingen"));
         tabLayout.addTab(tabLayout.newTab().setText("info eigenaar"));

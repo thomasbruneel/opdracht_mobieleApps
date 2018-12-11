@@ -152,7 +152,7 @@ public class Home extends Fragment {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         ZoekertjeDB z = (ZoekertjeDB) (parent.getItemAtPosition(position));
-                                        Intent intent = new Intent(view.getContext(), ZoekertjeViewOwner.class);
+                                        Intent intent = new Intent(view.getContext(), ZoekertjeViewPublic.class);
                                         intent.putExtra("mijnZoekertje", z);
                                         startActivity(intent);
                                     }
