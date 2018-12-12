@@ -45,6 +45,12 @@ dependencies {
     //toegevoegd voor REST calls
     implementation 'com.android.volley:volley:1.0.0'
     implementation 'com.google.code.gson:gson:2.8.0'
+
+    //toegevoegd voor Robotium
+    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.6.3'
+
+
+
 }
 
     //noddig voor firebase
