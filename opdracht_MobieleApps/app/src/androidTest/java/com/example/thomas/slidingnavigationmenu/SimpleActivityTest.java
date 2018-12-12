@@ -2,6 +2,8 @@ package com.example.thomas.slidingnavigationmenu;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.filters.MediumTest;
+import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.robotium.solo.Solo;
@@ -42,9 +44,11 @@ public class SimpleActivityTest extends ActivityInstrumentationTestCase2<MainAct
         super(MainActivity.class);
     }
 
+    @Override
     public void setUp() throws Exception {
         solo = new Solo(getInstrumentation(), getActivity());
     }
+
 
 
     @Override
@@ -52,7 +56,9 @@ public class SimpleActivityTest extends ActivityInstrumentationTestCase2<MainAct
         solo.finishOpenedActivities();
     }
 
+    @MediumTest
     public void testListItemClickShouldDisplayToast() throws Exception {
+        System.out.println("word ik uitgevoerd");
         solo.assertCurrentActivity("wrong activity", MainActivity.class);
 
         //  solo.clickOnButton(R.id.uiToevoegButton);
