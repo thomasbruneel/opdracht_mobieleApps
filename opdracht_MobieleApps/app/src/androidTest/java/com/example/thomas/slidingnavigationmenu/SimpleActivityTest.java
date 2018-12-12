@@ -14,6 +14,7 @@ import static org.junit.Assert.assertEquals;
 
 import junit.framework.Assert;
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.EditText;
 
 import com.robotium.solo.Solo;
 
@@ -35,29 +36,38 @@ public class SimpleActivityTest extends ActivityInstrumentationTestCase2<MainAct
 
 
 
-        private Solo solo;
+    private Solo solo;
 
-        public SimpleActivityTest() {
-            super(MainActivity.class);
-        }
+    public SimpleActivityTest() {
+        super(MainActivity.class);
+    }
 
-        public void setUp() throws Exception {
-            solo = new Solo(getInstrumentation(), getActivity());
-        }
+    public void setUp() throws Exception {
+        solo = new Solo(getInstrumentation(), getActivity());
+    }
 
 
-        @Override
-        public void tearDown() throws Exception {
-            solo.finishOpenedActivities();
-        }
+    @Override
+    public void tearDown() throws Exception {
+        solo.finishOpenedActivities();
+    }
 
     public void testListItemClickShouldDisplayToast() throws Exception {
         solo.assertCurrentActivity("wrong activity", MainActivity.class);
 
-    }
+        //  solo.clickOnButton(R.id.uiToevoegButton);
+
+        solo.enterText(R.id.uiTitel,"titel");
+        solo.enterText(R.id.uiPrijs,"prijs");
+        solo.enterText(R.id.uiBeschrijving,"beschrijving");
+
+        solo.clickOnButton(R.id.uiToevoegButton);
 
 
     }
+
+
+}
 
 
 
