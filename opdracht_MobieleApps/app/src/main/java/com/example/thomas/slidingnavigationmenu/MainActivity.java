@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
@@ -56,6 +57,8 @@ public class MainActivity extends AppCompatActivity{
     NavigationView nv;
     View headerView;
 
+
+
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_IMAGE_GALLERY = 2;
     static final int REQUEST_SIGNIN=3;
@@ -76,6 +79,7 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         mijnDrawer = (DrawerLayout) findViewById(R.id.drawer);
         mijnToggle = new ActionBarDrawerToggle(this, mijnDrawer, R.string.open, R.string.close);
@@ -142,6 +146,11 @@ public class MainActivity extends AppCompatActivity{
 
             case R.id.about:
                 fragmentClass = About.class;
+                break;
+
+
+            case R.id.music:
+                fragmentClass = Music.class;
                 break;
 
             case R.id.settings:

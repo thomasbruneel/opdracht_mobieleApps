@@ -13,6 +13,8 @@
 
     <item android:id="@+id/about" android:title="About us" android:icon="@drawable/ic_icon_about"/>
 
+    <item android:id="@+id/music" android:title="Music" android:icon="@drawable/ic_icon_music"/>
+
     <item android:id="@+id/logout" android:title="Logout" android:icon="@drawable/ic_icon_signout"/>
 
 

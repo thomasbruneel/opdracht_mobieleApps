@@ -35,7 +35,7 @@ dependencies {
     compile 'com.android.support:design:26.1.0'
 
     //toegevoegd voor googlesign
-    compile 'com.google.android.gms:play-services-auth:16.0.1'
+    compile 'com.google.android.gms:play-services-auth:16.0.0'
 
     //toegevoegd voor google maps
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
@@ -50,8 +50,9 @@ dependencies {
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.6.3'
 
 
-
 }
 
-    //noddig voor firebase
-    apply plugin: 'com.google.gms.google-services'
+//noddig voor firebase
+    
+
+apply plugin: 'com.google.gms.google-services'

@@ -24,7 +24,7 @@ import com.robotium.solo.Solo;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class SimpleActivityTest extends ActivityInstrumentationTestCase2<ZoekertjeToevoegen>{
+public class SimpleActivityTest extends ActivityInstrumentationTestCase2<MainActivity>{
    /* @Test
     public void useAppContext() throws Exception {
         // Context of the app under test.
@@ -38,7 +38,7 @@ public class SimpleActivityTest extends ActivityInstrumentationTestCase2<Zoekert
         private Solo solo;
 
         public SimpleActivityTest() {
-            super(ZoekertjeToevoegen.class);
+            super(MainActivity.class);
         }
 
         public void setUp() throws Exception {
@@ -52,7 +52,7 @@ public class SimpleActivityTest extends ActivityInstrumentationTestCase2<Zoekert
         }
 
     public void testListItemClickShouldDisplayToast() throws Exception {
-        solo.assertCurrentActivity("wrong activity", ZoekertjeToevoegen.class);
+        solo.assertCurrentActivity("wrong activity", MainActivity.class);
 
     }
 

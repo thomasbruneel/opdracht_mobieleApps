@@ -2,56 +2,52 @@ package com.example.thomas.slidingnavigationmenu;
 
 import android.app.Service;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
 
-/**
- * Created by thomas on 11/12/2018.
- */
 
 public class MyService extends Service {
-    /** indicates how to behave if the service is killed */
-    int mStartMode;
+    private static final String TAG = null;
+    MediaPlayer player;
+    public IBinder onBind(Intent arg0) {
 
-    /** interface for clients that bind */
-    IBinder mBinder;
-
-    /** indicates whether onRebind should be used */
-    boolean mAllowRebind;
-
-    /** Called when the service is being created. */
+        return null;
+    }
     @Override
     public void onCreate() {
+        super.onCreate();
+        player = MediaPlayer.create(this,R.raw.money);
+        player.setLooping(true); // Set looping
+        player.setVolume(100,100);
 
     }
-
-    /** The service is starting, due to a call to startService() */
-    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        return mStartMode;
+        player.start();
+        return 1;
     }
 
-    /** A client is binding to the service with bindService() */
-    @Override
-    public IBinder onBind(Intent intent) {
-        return mBinder;
+    public void onStart(Intent intent, int startId) {
+        // TO DO
+    }
+    public IBinder onUnBind(Intent arg0) {
+        // TO DO Auto-generated method
+        return null;
     }
 
-    /** Called when all clients have unbound with unbindService() */
-    @Override
-    public boolean onUnbind(Intent intent) {
-        return mAllowRebind;
-    }
-
-    /** Called when a client is binding to the service with bindService()*/
-    @Override
-    public void onRebind(Intent intent) {
+    public void onStop() {
 
     }
+    public void onPause() {
 
-    /** Called when The service is no longer used and is being destroyed */
+    }
     @Override
     public void onDestroy() {
+        player.stop();
+        player.release();
+    }
+
+    @Override
+    public void onLowMemory() {
 
     }
 }
