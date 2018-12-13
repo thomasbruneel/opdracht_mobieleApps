@@ -60,32 +60,4 @@ public class EmailTest {
     }
 
 
-
-/*    @Before
-    public void setUp() throws Exception {
-        activity = Robolectric.buildActivity(RobolectricActivity.class)
-                .create()
-                .resume()
-                .get();
-    }
-
-*/
-
-
-
-
-
- /*   @Test
-    public void onCreateShouldInflateTheMenu() {
-        Activity activity = Robolectric.setupActivity(MainActivity.class);
-
-
-        activity.button.performClick();
-
-        assertThat(activity.message.getText()).isEqualTo("Robolectric Rocks!");*/
-
-/*        final Menu menu = shadowOf(activity).getOptionsMenu();
-        assertThat(menu.findItem(R.id.item1).getTitle()).isEqualTo("First menu item");
-        assertThat(menu.findItem(R.id.item2).getTitle()).isEqualTo("Second menu item");
-        */
-    }
+}

@@ -60,6 +60,8 @@ dependencies {
     testCompile "org.robolectric:shadows-supportv4:3.8"
 
 
+    compile files('libs/robotium-solo-5.6.3.jar')
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
 
 }
 
