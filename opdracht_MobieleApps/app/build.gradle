@@ -57,6 +57,7 @@ dependencies {
 
     //toegevoegd voor robolectric
     testImplementation 'org.robolectric:robolectric:4.1'
+    testCompile "org.robolectric:shadows-supportv4:3.8"
 
 
 
